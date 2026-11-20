@@ -1,0 +1,947 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Color · FID SDK</title>
+<meta name="description" content="Guía de color del SDK de FID: anatomía, marca del cliente, tokens, estados de interacción, accesibilidad y código.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,100..700,0..1,0&display=swap">
+<style>
+/* ═════ Paquete FID SDK ═════ */
+/* FID SDK · tokens.css
+ * Generado desde el archivo de Figma “FID SDK — Variables”.
+ * Nombre en Figma  →  variable CSS:   button/primary-bg  →  --button-primary-bg
+ * Los componentes usan SOLO los tokens semánticos (sección 2). Los primitivos (sección 1)
+ * son materia prima y no se usan directamente en componentes. */
+
+/* ===== 1 · Primitivos: escalas de color de 12 pasos ===== */
+:root {
+  /* gray: fondos, bordes y texto (un solo gris para todo el SDK) */
+  --gray-1: #FCFCFD;  --gray-2: #F8F9FA;  --gray-3: #F1F3F5;  --gray-4: #E9ECEF;
+  --gray-5: #E3E7EA;  --gray-6: #DEE2E6;  --gray-7: #CED4DA;  --gray-8: #B7BFC6;
+  --gray-9: #868E96;  --gray-10: #6D757D; --gray-11: #495057; --gray-12: #212529;
+
+  /* indigo: marca FID (paso 9 = #2A39D0). Alimenta la escala accent */
+  --indigo-1: #F9FAFE;  --indigo-2: #F2F6FE;  --indigo-3: #E8EEFE;  --indigo-4: #DDE6FF;
+  --indigo-5: #CEDBFE;  --indigo-6: #BDCEFE;  --indigo-7: #A6BDFE;  --indigo-8: #87A4FE;
+  --indigo-9: #2A39D0;  --indigo-10: #252FC3; --indigo-11: #1B1EA5; --indigo-12: #0A0E56;
+
+  /* blue: links (paso 11 = #0000EE) e información */
+  --blue-1: #F8FAFE;  --blue-2: #F2F6FE;  --blue-3: #E7EFFF;  --blue-4: #DAE7FF;
+  --blue-5: #CBDCFF;  --blue-6: #B8D0FF;  --blue-7: #A0BFFE;  --blue-8: #7EA7FE;
+  --blue-9: #0F4CFF;  --blue-10: #0030F9; --blue-11: #0000EE; --blue-12: #000094;
+
+  /* red: error */
+  --red-1: #FFF8F8;  --red-2: #FEF3F2;  --red-3: #FEE9E7;  --red-4: #FFDDDB;
+  --red-5: #FFCECB;  --red-6: #FFBCB7;  --red-7: #FEA39E;  --red-8: #FC7E79;
+  --red-9: #B62424;  --red-10: #AA1A1C; --red-11: #900911; --red-12: #510C0C;
+
+  /* green: éxito */
+  --green-1: #F8FBF9;  --green-2: #F1F8F3;  --green-3: #E5F3E9;  --green-4: #D7EDDD;
+  --green-5: #C5E5CE;  --green-6: #AFDCBD;  --green-7: #95D0A7;  --green-8: #71BD8B;
+  --green-9: #1E824C;  --green-10: #137944; --green-11: #046637; --green-12: #0F3C22;
+
+  /* amber: advertencia */
+  --amber-1: #FFFAEE;  --amber-2: #FFF5DF;  --amber-3: #FFEDC6;  --amber-4: #FEE3AC;
+  --amber-5: #FFD588;  --amber-6: #FFC45D;  --amber-7: #FBAE1F;  --amber-8: #E7950A;
+  --amber-9: #B45309;  --amber-10: #A84C01; --amber-11: #8F3F00; --amber-12: #57280A;
+
+  /* base y translúcidos (sombras, superposiciones) */
+  --base-white: #FFFFFF;
+  --base-black: #000000;
+  --black-a-1: rgba(0, 0, 0, 0.02);  --black-a-2: rgba(0, 0, 0, 0.04);  --black-a-3: rgba(0, 0, 0, 0.06);
+  --black-a-4: rgba(0, 0, 0, 0.08);  --black-a-5: rgba(0, 0, 0, 0.1);   --black-a-6: rgba(0, 0, 0, 0.12);
+  --black-a-7: rgba(0, 0, 0, 0.16);  --black-a-8: rgba(0, 0, 0, 0.24);  --black-a-9: rgba(0, 0, 0, 0.44);
+  --black-a-10: rgba(0, 0, 0, 0.5);  --black-a-11: rgba(0, 0, 0, 0.6);  --black-a-12: rgba(0, 0, 0, 0.9);
+  --white-a-1: rgba(255, 255, 255, 0.02);  --white-a-2: rgba(255, 255, 255, 0.04);  --white-a-3: rgba(255, 255, 255, 0.06);
+  --white-a-4: rgba(255, 255, 255, 0.08);  --white-a-5: rgba(255, 255, 255, 0.1);   --white-a-6: rgba(255, 255, 255, 0.14);
+  --white-a-7: rgba(255, 255, 255, 0.18);  --white-a-8: rgba(255, 255, 255, 0.26);  --white-a-9: rgba(255, 255, 255, 0.5);
+  --white-a-10: rgba(255, 255, 255, 0.56); --white-a-11: rgba(255, 255, 255, 0.7);  --white-a-12: rgba(255, 255, 255, 0.94);
+}
+
+/* ===== 2 · Semánticos: lo que se usa en el código =====
+ * Se declaran en :root Y en .sdk-frame a propósito: var() se resuelve en el elemento donde se declara,
+ * así que si el cliente escribe --accent-9 en .sdk-frame, los semánticos que dependen de accent
+ * (--button-primary-bg, --brand-*, --stroke-primary…) se recalculan dentro del contenedor.
+ * Valores inyectables por el cliente en .sdk-frame: --accent-9 (primary), --button-primary-text (primaryText),
+ * --radius-button (radius) y --font-family-default (font). Ejemplo:
+ *   .sdk-frame { --accent-9: #6D28D9; --button-primary-text: #FFFFFF; --radius-button: 16px; --font-family-default: 'Poppins'; } */
+:root,
+.sdk-frame {
+  /* text: jerarquía primary > secondary > tertiary */
+  --text-primary: var(--gray-12);
+  --text-secondary: var(--gray-11);
+  --text-tertiary: var(--gray-10);
+  --text-brand: var(--accent-9);
+  --text-link: var(--blue-11);
+  --text-placeholder: var(--gray-9);
+  --text-disabled: var(--gray-8);
+  --text-inverse: var(--base-white);
+  --text-inverse-subtle: var(--gray-7);
+
+  /* bg */
+  --bg-default: var(--base-white);
+  --bg-surface: var(--gray-2);
+  --bg-subtle: var(--gray-4);
+  --bg-muted: var(--gray-6);
+  --bg-strong: var(--gray-7);
+  --bg-inverse: var(--gray-12);
+
+  /* stroke */
+  --stroke-default: var(--gray-6);
+  --stroke-subtle: var(--gray-4);
+  --stroke-strong: var(--gray-7);
+  --stroke-primary: var(--accent-9);
+  --stroke-brand-subtle: var(--accent-6);
+
+  /* button */
+  --button-primary-bg: var(--accent-9);
+  --button-primary-bg-hover: var(--accent-10);
+  --button-primary-text: var(--base-white); /* lo configura el cliente (primaryText); se recomienda contraste ≥ 4.5:1 contra --accent-9 */
+  --button-secondary-bg: var(--base-white);
+  --button-secondary-bg-hover: var(--gray-3);
+  --button-secondary-border: var(--gray-6);
+  --button-secondary-text: var(--gray-12);
+  --button-tertiary-text: var(--accent-9);
+  --button-tertiary-bg-hover: var(--accent-3);
+  --button-danger-bg: var(--red-9);
+  --button-danger-bg-hover: var(--red-10);
+  --button-danger-text: var(--base-white);
+  --button-disabled-bg: var(--gray-6);
+  --button-disabled-border: var(--gray-7);
+  --button-disabled-text: var(--gray-9);
+
+  /* feedback: nunca cambian con la marca */
+  --feedback-error-bg: var(--red-3);
+  --feedback-error-surface: var(--red-2);
+  --feedback-error-border: var(--red-6);
+  --feedback-error-text: var(--red-9);
+  --feedback-error-icon: var(--red-9);
+  --feedback-success-bg: var(--green-3);
+  --feedback-success-border: var(--green-6);
+  --feedback-success-text: var(--green-11);
+  --feedback-success-icon: var(--green-9);
+  --feedback-warning-bg: var(--amber-2);
+  --feedback-warning-border: var(--amber-7);
+  --feedback-warning-text: var(--amber-9);
+  --feedback-warning-icon: var(--amber-9);
+  --feedback-info-bg: var(--blue-3);
+  --feedback-info-border: var(--blue-6);
+  --feedback-info-text: var(--blue-11);
+  --feedback-info-icon: var(--blue-9);
+
+  /* brand: siguen a accent (cambian con el color del cliente) */
+  --brand-default: var(--accent-9);
+  --brand-surface: var(--accent-2);
+  --brand-tint: var(--accent-3);
+
+  /* accent: por defecto = indigo. --accent-9 lo inyecta el cliente (primary); el resto se recalcula en accent-from-primary.css */
+  --accent-1: var(--indigo-1);  --accent-2: var(--indigo-2);  --accent-3: var(--indigo-3);  --accent-4: var(--indigo-4);
+  --accent-5: var(--indigo-5);  --accent-6: var(--indigo-6);  --accent-7: var(--indigo-7);  --accent-8: var(--indigo-8);
+  --accent-9: var(--indigo-9);  --accent-10: var(--indigo-10); --accent-11: var(--indigo-11); --accent-12: var(--indigo-12);
+
+  /* decor y overlay */
+  --decor-subtle: var(--blue-3);
+  --decor-soft: var(--blue-5);
+  --decor-default: var(--blue-8);
+  --overlay-default: var(--base-black);
+}
+
+/* ===== 3 · Fuente, radios, espaciado y tamaños ===== */
+:root {
+  --font-family-default: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif; /* lo configura el cliente */
+  --font-style-regular: 400;
+  --font-style-medium: 500;
+  --font-style-semibold: 600;
+  --font-style-bold: 700;
+
+  /* radios: --radius-button lo configura el cliente (xs 4, s 8, m 16, full 999 o cualquier valor ≥ 0) */
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 999px;
+  --radius-button: 999px;
+
+  /* espaciado y tamaños */
+  --spacing-0: 0px;   --spacing-4: 4px;   --spacing-8: 8px;   --spacing-12: 12px; --spacing-16: 16px;
+  --spacing-20: 20px; --spacing-24: 24px; --spacing-32: 32px; --spacing-40: 40px; --spacing-52: 52px; --spacing-56: 56px;
+  --size-icon-sm: 20px;
+  --border-width-default: 1px;
+
+  /* tamaños, interlineados y espaciado entre letras de los estilos de texto */
+  --font-size-10: 10px; --font-size-12: 12px; --font-size-14: 14px; --font-size-16: 16px;
+  --font-size-18: 18px; --font-size-20: 20px; --font-size-24: 24px; --font-size-32: 32px;
+  --font-line-height-14: 14px; --font-line-height-16: 16px; --font-line-height-20: 20px; --font-line-height-22: 22px;
+  --font-line-height-24: 24px; --font-line-height-26: 26px; --font-line-height-28: 28px; --font-line-height-32: 32px;
+  --font-line-height-44: 44px;
+  --font-letter-spacing-default: 0;
+  --font-letter-spacing-small: 0.1px;
+}
+
+/* FID SDK · accent-from-primary.css
+ * El color principal (primary) ocupa el paso 9 de la escala accent y los demás
+ * pasos se calculan mezclándolo con blanco (pasos 1–8) o con negro (10–12). El color del texto de los botones (primaryText) se inyecta aparte.
+ *
+ * Uso: cargar DESPUÉS de tokens.css y escribir en el contenedor del SDK los valores del cliente:
+ *   frame.style.setProperty('--accent-9', cfg.primary);                 // color principal: de acá sale toda la escala
+ *   frame.style.setProperty('--button-primary-text', cfg.primaryText);  // texto de los botones primarios y tilde de las casillas
+ * --button-primary-text es independiente de la escala: por defecto vale var(--base-white) (#FFFFFF) y debe tener
+ * se recomienda contraste ≥ 4.5:1 contra --accent-9 (es un aviso, no impide inyectarlo).
+ * Requiere color-mix(): Chrome 111, Safari 16.2, Firefox 113. Sin soporte, calcular los valores en JS. */
+
+.sdk-frame {
+  /* --accent-9: lo inyecta el cliente (por defecto #2A39D0 desde tokens.css) */
+  --accent-1:  color-mix(in srgb, var(--accent-9)  3%, white);
+  --accent-2:  color-mix(in srgb, var(--accent-9)  5%, white);   /* brand/surface */
+  --accent-3:  color-mix(in srgb, var(--accent-9) 10%, white);   /* brand/tint, button/tertiary-bg-hover */
+  --accent-4:  color-mix(in srgb, var(--accent-9) 15%, white);   /* aro de foco de la celda de código */
+  --accent-5:  color-mix(in srgb, var(--accent-9) 22%, white);
+  --accent-6:  color-mix(in srgb, var(--accent-9) 29%, white);   /* stroke/brand-subtle */
+  --accent-7:  color-mix(in srgb, var(--accent-9) 39%, white);
+  --accent-8:  color-mix(in srgb, var(--accent-9) 54%, white);   /* variante suave de las ilustraciones */
+  --accent-10: color-mix(in srgb, var(--accent-9) 97%, black);   /* button/primary-bg-hover */
+  --accent-11: color-mix(in srgb, var(--accent-9) 87%, black);
+  --accent-12: color-mix(in srgb, var(--accent-9) 46%, black);
+}
+
+/* FID SDK · illustrations.css
+ * Clases que pintan las ilustraciones SVG y los Lotties de marca (escáner facial, card skeleton, verificación) con la escala accent.
+ *   .ill-primary / .lt-primary     → color pleno      → --accent-9
+ *   .ill-primary-50 / .lt-primary-50 → variante suave → --accent-8
+ * No hay variables nuevas: son pasos de la escala accent. Las partes fijas (blanco, grises) no llevan clase. */
+
+.sdk-ill { display: block; flex-shrink: 0; overflow: visible; }
+
+.ill-primary    { fill: var(--accent-9); }
+.ill-primary-50 { fill: var(--accent-8); }
+
+/* Lotties de marca (las clases las agrega js/tint-lottie.js) */
+.lt-primary.lt-fill      { fill: var(--accent-9); }
+.lt-primary.lt-stroke    { stroke: var(--accent-9); }
+.lt-primary-50.lt-fill   { fill: var(--accent-8); }
+.lt-primary-50.lt-stroke { stroke: var(--accent-8); }
+
+/* FID SDK · icons.css
+ * Íconos de interfaz: Material Symbols Rounded, peso 300, sin relleno (FILL 0).
+ * Los íconos rellenos se marcan con .icon--filled (FILL 1).
+ *
+ * Cargar la fuente (una sola vez, en el <head>):
+ *   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,100..700,0..1,0&display=swap">
+ *
+ * Uso:
+ *   <span class="icon" aria-hidden="true">info</span>
+ *   <span class="icon icon--filled" aria-hidden="true">error</span>
+ *
+ * Tamaños habituales: 24 px (por defecto) y 20 px (dentro de tiles y de componentes compactos).
+ * El color no se define acá: sale de los tokens (--feedback-*-icon, --text-*, --brand-default). */
+
+.icon {
+  --icon-fill: 0;
+  font-family: 'Material Symbols Rounded';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  display: inline-block;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' var(--icon-fill), 'wght' 300, 'GRAD' 0, 'opsz' 24;
+}
+.icon--filled { --icon-fill: 1; }
+
+
+/* ═════ Guía ═════
+   Lenguaje FID: Inter, grises neutros, el índigo solo para lo interactivo o lo que cambia con la marca,
+   radios 4/8/12, sin sombras. Todo color sale de tokens. */
+*{box-sizing:border-box}
+:root{--sp-1:var(--spacing-4,4px);--sp-2:var(--spacing-8,8px);--sp-3:var(--spacing-12,12px);--sp-4:var(--spacing-16,16px);--sp-6:var(--spacing-24,24px);--sp-8:var(--spacing-32,32px);--sp-10:var(--spacing-40,40px);--sp-12:48px;--sp-16:64px;--sp-24:96px;--head:64px}
+html{scroll-padding-top:calc(var(--head) + 64px)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;color:var(--text-primary);background:var(--bg-default);font-size:var(--font-size-16);line-height:var(--font-line-height-26);-webkit-font-smoothing:antialiased}
+a{color:var(--text-link)}
+:focus-visible{outline:2px solid var(--stroke-primary);outline-offset:2px;border-radius:var(--radius-sm)}
+code,pre,.mono{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-variant-ligatures:none}
+code{font-size:.875em;background:var(--bg-subtle);padding:.1em .35em;border-radius:var(--radius-sm)}
+h1,h2,h3,h4{margin:0;color:var(--text-primary)}
+h2{font-size:var(--font-size-24);line-height:var(--font-line-height-32);font-weight:700;margin:var(--sp-16) 0 var(--sp-3)}
+h2:first-child{margin-top:0}
+h3{font-size:var(--font-size-20);line-height:var(--font-line-height-28);font-weight:600;margin:var(--sp-10) 0 var(--sp-3)}
+p{margin:0 0 var(--sp-4);max-width:70ch}
+ul.plain{margin:0 0 var(--sp-4);padding-left:var(--sp-6);max-width:70ch}
+ul.plain li{margin-bottom:var(--sp-1)}
+button{font:inherit;cursor:pointer}
+.muted{color:var(--text-tertiary)}
+.small{font-size:var(--font-size-14);line-height:var(--font-line-height-20)}
+
+/* Encabezado fijo */
+.top{position:sticky;top:0;z-index:20;height:var(--head);display:flex;align-items:center;gap:var(--sp-4);padding:0 var(--sp-6);background:var(--bg-default);border-bottom:1px solid var(--stroke-subtle)}
+.top svg{height:26px;width:auto}
+.top .crumbs{font-size:var(--font-size-14);color:var(--text-tertiary)}
+.top .crumbs b{color:var(--text-primary);font-weight:600}
+.top .out{margin-left:auto;font-size:var(--font-size-14);font-weight:500;text-decoration:none;color:var(--text-secondary)}
+.top .out:hover{color:var(--text-primary);text-decoration:underline}
+
+/* Título y pestañas */
+.pagehead{max-width:1200px;margin:0 auto;padding:var(--sp-12) var(--sp-8) 0}
+.pagehead h1{font-size:var(--font-size-32);line-height:var(--font-line-height-44);font-weight:700;letter-spacing:-.01em}
+.pagehead p{color:var(--text-secondary);font-size:var(--font-size-18);line-height:var(--font-line-height-26);margin:var(--sp-2) 0 0}
+.tabsbar{position:sticky;top:var(--head);z-index:15;background:var(--bg-default);border-bottom:1px solid var(--stroke-default);margin-top:var(--sp-8)}
+.tabsbar nav{max-width:1200px;margin:0 auto;padding:0 var(--sp-8);display:flex;gap:var(--sp-6);overflow-x:auto}
+.tabsbar a{display:block;padding:var(--sp-3) 0;margin-bottom:-1px;border-bottom:2px solid transparent;color:var(--text-secondary);text-decoration:none;font-size:var(--font-size-16);font-weight:500;white-space:nowrap}
+.tabsbar a:hover{color:var(--text-primary)}
+.tabsbar a[aria-current=page]{color:var(--text-primary);font-weight:600;border-bottom-color:var(--brand-default)}
+
+/* Contenido + índice de la página */
+.layout{max-width:1200px;margin:0 auto;padding:var(--sp-12) var(--sp-8) var(--sp-24);display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:var(--sp-16)}
+.panel[hidden]{display:none}
+.otp{position:sticky;top:calc(var(--head) + 72px);align-self:start;font-size:var(--font-size-14);line-height:var(--font-line-height-20)}
+.otp b{display:block;font-size:var(--font-size-12);font-weight:600;color:var(--text-tertiary);margin-bottom:var(--sp-2)}
+.otp a{display:block;padding:var(--sp-1) 0 var(--sp-1) var(--sp-3);border-left:2px solid var(--stroke-subtle);color:var(--text-secondary);text-decoration:none}
+.otp a:hover{color:var(--text-primary)}
+.otp a.on{border-left-color:var(--brand-default);color:var(--text-primary);font-weight:600}
+
+/* Tablas */
+.tablewrap{overflow:auto;margin:var(--sp-4) 0 var(--sp-6)}
+table{border-collapse:collapse;width:100%;font-size:var(--font-size-14);line-height:var(--font-line-height-20)}
+th{text-align:left;font-weight:600;color:var(--text-secondary);padding:var(--sp-2) var(--sp-4) var(--sp-2) 0;border-bottom:1px solid var(--stroke-default);white-space:nowrap}
+td{padding:var(--sp-3) var(--sp-4) var(--sp-3) 0;border-top:1px solid var(--stroke-subtle);vertical-align:top}
+tbody tr:first-child td{border-top:0}
+td code{white-space:nowrap}
+td:first-child{white-space:nowrap}
+.sw{display:inline-block;width:16px;height:16px;border-radius:var(--radius-sm);border:1px solid var(--stroke-default);vertical-align:-3px;margin-right:var(--sp-2);flex:none}
+.badge{display:inline-flex;font-size:var(--font-size-12);font-weight:600;border-radius:999px;padding:0 var(--sp-2);border:1px solid var(--stroke-brand-subtle);background:var(--brand-tint);color:var(--brand-default);white-space:nowrap}
+.badge.fix{background:var(--bg-surface);border-color:var(--stroke-default);color:var(--text-tertiary)}
+.badge.ok{background:var(--feedback-success-bg);border-color:var(--feedback-success-border);color:var(--feedback-success-text)}
+.badge.no{background:var(--feedback-error-bg);border-color:var(--feedback-error-border);color:var(--feedback-error-text)}
+
+/* Copiar con un toque */
+.copyhex{display:inline-flex;align-items:center;gap:2px;border:0;background:none;padding:0;font:inherit;color:inherit;cursor:pointer}
+.copyhex::after{content:'content_copy';font-family:'Material Symbols Rounded';font-size:14px;line-height:1;font-variation-settings:'FILL' 0,'wght' 300;opacity:0;transition:opacity .15s}
+.copyhex:hover,.copyhex:focus-visible{color:var(--text-primary)}
+.copyhex:hover::after,.copyhex:focus-visible::after{opacity:1}
+.toast{position:fixed;bottom:var(--sp-6);left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg-inverse);color:var(--text-inverse);padding:var(--sp-2) var(--sp-4);border-radius:999px;font-size:var(--font-size-14);opacity:0;transition:.2s;z-index:50;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%)}
+
+/* Código */
+.code{margin:var(--sp-4) 0 var(--sp-6);border-radius:var(--radius-lg);background:var(--bg-inverse);color:var(--text-inverse-subtle);overflow:hidden}
+.code .bar{display:flex;align-items:center;padding:var(--sp-2) var(--sp-2) var(--sp-2) var(--sp-4);background:color-mix(in srgb,var(--text-inverse) 8%,var(--bg-inverse));font-size:var(--font-size-12)}
+.code .bar button{margin-left:auto;background:transparent;border:1px solid color-mix(in srgb,var(--text-inverse) 25%,transparent);color:var(--text-inverse);border-radius:var(--radius-md);padding:var(--sp-1) var(--sp-3);font-size:var(--font-size-12)}
+.code pre{margin:0;padding:var(--sp-4) var(--sp-6);overflow:auto;font-size:13px;line-height:1.65}
+.tk-c{color:var(--text-placeholder)}
+
+/* Notas y hacer / no hacer */
+.note{border-left:2px solid var(--stroke-strong);padding:var(--sp-1) 0 var(--sp-1) var(--sp-4);margin:var(--sp-6) 0;max-width:70ch;font-size:var(--font-size-14);line-height:var(--font-line-height-20);color:var(--text-secondary)}
+.note b{display:block;color:var(--text-primary);margin-bottom:var(--sp-1)}
+.dodont{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--sp-6);margin:var(--sp-4) 0 var(--sp-8)}
+.dd .stage{min-height:140px}
+.dd .lbl{display:flex;align-items:center;gap:var(--sp-2);padding-top:var(--sp-3);margin-top:var(--sp-3);border-top:3px solid var(--feedback-success-icon);font-weight:600;font-size:var(--font-size-14)}
+.dd.dont .lbl{border-top-color:var(--feedback-error-icon)}
+.dd .lbl .icon{font-size:20px;color:var(--feedback-success-icon)}
+.dd.dont .lbl .icon{color:var(--feedback-error-icon)}
+.dd p{font-size:var(--font-size-14);line-height:var(--font-line-height-20);color:var(--text-secondary);margin:var(--sp-1) 0 0}
+
+/* Escenarios de muestra */
+.stage{background:var(--bg-surface);border-radius:var(--radius-lg);padding:var(--sp-6);display:flex;flex-wrap:wrap;gap:var(--sp-4);align-items:center;justify-content:center}
+.brands{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--sp-4);margin:var(--sp-6) 0}
+.brands figure{margin:0}
+.brands figcaption{margin-top:var(--sp-2);font-size:var(--font-size-14);line-height:var(--font-line-height-20);color:var(--text-secondary)}
+.brands figcaption code{font-size:12px}
+.mini{zoom:.62}
+
+/* Anatomía */
+.anat{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:var(--sp-8);align-items:start;margin:var(--sp-4) 0 var(--sp-6)}
+.anat .stage{padding:var(--sp-6) var(--sp-4)}
+.anat .phone{width:328px;max-width:100%}
+.legend{list-style:none;margin:0;padding:0;counter-reset:a}
+.legend li{counter-increment:a;display:grid;grid-template-columns:28px 1fr;gap:var(--sp-3);padding:var(--sp-3) var(--sp-2);border-top:1px solid var(--stroke-subtle);cursor:default;border-radius:var(--radius-sm)}
+.legend li:last-child{border-bottom:1px solid var(--stroke-subtle)}
+.legend li::before{content:counter(a);width:24px;height:24px;border-radius:50%;background:var(--bg-inverse);color:var(--text-inverse);font-size:12px;font-weight:600;display:grid;place-items:center}
+.legend li:hover,.legend li:focus-within,.legend li.on{background:var(--bg-surface)}
+.legend b{display:block;font-size:var(--font-size-14);line-height:var(--font-line-height-20)}
+.legend span{font-size:var(--font-size-14);line-height:var(--font-line-height-20);color:var(--text-secondary)}
+.legend code{font-size:12px}
+.legend .badge{font-size:var(--font-size-12);line-height:var(--font-line-height-16);color:var(--brand-default)}
+.hot{outline:2px dashed var(--feedback-warning-icon) !important;outline-offset:3px}
+
+/* Capas */
+.layers{border-radius:var(--radius-lg);background:var(--bg-surface);border:1px solid var(--stroke-default);padding:var(--sp-6);margin:var(--sp-4) 0 var(--sp-6);max-width:620px}
+.layers .l2{background:var(--bg-default);border:1px solid var(--stroke-default);border-radius:var(--radius-lg);padding:var(--sp-6);margin-top:var(--sp-4)}
+.layers .l3{display:flex;gap:var(--sp-3);flex-wrap:wrap;margin-top:var(--sp-4)}
+.layers .l3 span{padding:var(--sp-2) var(--sp-3);border-radius:var(--radius-md);font-size:var(--font-size-14)}
+.layers .tag{font-size:var(--font-size-12);line-height:var(--font-line-height-16);color:var(--text-secondary)}
+.layers .tag b{color:var(--text-primary);font-weight:600}
+
+/* Cadena */
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:var(--sp-2);margin:var(--sp-4) 0 var(--sp-6)}
+.flow .step{flex:1 1 180px;border:1px solid var(--stroke-default);border-radius:var(--radius-md);padding:var(--sp-3) var(--sp-4)}
+.flow .step small{display:block;font-size:var(--font-size-12);font-weight:600;color:var(--text-tertiary)}
+.flow .step code{font-size:12px}
+.flow .arr{display:flex;align-items:center;color:var(--text-tertiary)}
+
+/* Nombre de un token */
+.tname{display:flex;flex-wrap:wrap;gap:2px;margin:var(--sp-4) 0 var(--sp-6);font-family:'JetBrains Mono',monospace;font-size:20px}
+.tname span{display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-2)}
+.tname b{font-weight:500;padding:var(--sp-2) var(--sp-3);background:var(--bg-subtle);border-radius:var(--radius-sm)}
+.tname span:nth-child(1) b{background:var(--brand-tint)}
+.tname small{font-family:'Inter',sans-serif;font-size:var(--font-size-12);color:var(--text-tertiary);padding-left:var(--sp-1)}
+
+/* Estados */
+.states{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--sp-6);margin:var(--sp-4) 0 var(--sp-6)}
+.states figure{margin:0}
+.states .stage{min-height:120px}
+.states figcaption{display:grid;grid-template-columns:24px 1fr;gap:var(--sp-2);margin-top:var(--sp-3);font-size:var(--font-size-14);line-height:var(--font-line-height-20);color:var(--text-secondary)}
+.states figcaption i{font-style:normal;width:24px;height:24px;border-radius:50%;background:var(--bg-inverse);color:var(--text-inverse);font-size:12px;font-weight:600;display:grid;place-items:center}
+.states .sdk-btn{width:auto;min-width:180px}
+.force-hover.sdk-btn{background:var(--button-primary-bg-hover)}
+.force-hover.sdk-btn--secondary{background:var(--button-secondary-bg-hover)}
+
+/* Escalas */
+.strip{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:2px;min-width:180px}
+.strip i{display:block;height:20px;border-radius:2px}
+.prim{display:grid;gap:var(--sp-6);margin:var(--sp-6) 0}
+.prow{display:grid;grid-template-columns:150px minmax(0,1fr);gap:var(--sp-4);align-items:start}
+.plab b{display:block;font:600 14px/20px 'JetBrains Mono',monospace}
+.plab span{display:block;font-size:var(--font-size-12);line-height:var(--font-line-height-16);color:var(--text-tertiary);margin-top:var(--sp-1)}
+.pcells{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--sp-1)}
+.pc{display:flex;flex-direction:column;gap:var(--sp-1);min-width:0;padding:0;border:0;background:none;text-align:left;color:var(--text-tertiary)}
+.pc i{position:relative;display:flex;align-items:flex-end;height:44px;padding:var(--sp-1);border:1px solid var(--stroke-subtle);border-radius:var(--radius-sm);font:600 10px/1 'Inter',sans-serif;font-style:normal}
+.pc .ic{position:absolute;top:var(--sp-1);right:var(--sp-1);font-size:16px;opacity:0;transition:opacity .15s}
+.pc:hover .ic,.pc:focus-visible .ic,.pc.done .ic{opacity:1}
+.pc small{font:500 10px/14px 'JetBrains Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Selector de marca (pestaña Tokens) */
+.brandpick{display:flex;flex-wrap:wrap;gap:var(--sp-1);padding:var(--sp-1);background:var(--bg-subtle);border-radius:var(--radius-md);width:max-content;max-width:100%;margin:var(--sp-4) 0 var(--sp-2)}
+.brandpick button{display:inline-flex;align-items:center;gap:var(--sp-2);border:0;background:transparent;padding:var(--sp-2) var(--sp-3);border-radius:var(--radius-sm);font-size:var(--font-size-14);font-weight:500;color:var(--text-secondary)}
+.brandpick button i{width:14px;height:14px;border-radius:50%;border:1px solid var(--stroke-default)}
+.brandpick button[aria-pressed=true]{background:var(--bg-default);color:var(--text-primary);font-weight:600}
+
+/* Componentes del SDK usados en las muestras */
+.sdk-frame{font-family:var(--font-family-default),system-ui,-apple-system,'Segoe UI',sans-serif}
+.sdk-card{background:var(--bg-default);border:1px solid var(--stroke-default);border-radius:var(--radius-lg);overflow:hidden;text-align:center}
+.sdk-btn{display:flex;align-items:center;justify-content:center;width:100%;height:48px;padding:0 20px;font:600 16px/24px var(--font-family-default),system-ui,sans-serif;background:var(--button-primary-bg);border:1px solid var(--button-primary-bg);border-radius:var(--radius-button);color:var(--button-primary-text);cursor:default}
+.sdk-btn--secondary{background:var(--button-secondary-bg);border:1px solid var(--button-secondary-border);color:var(--button-secondary-text)}
+.sdk-btn:disabled{background:var(--button-disabled-bg);border-color:var(--button-disabled-border);color:var(--button-disabled-text)}
+.sdk-checkbox{width:24px;height:24px;border-radius:6px;background:var(--brand-default);color:var(--button-primary-text);display:grid;place-items:center;flex:none}
+.sdk-checkbox .icon{font-size:20px}
+.sdk-tile{width:40px;height:40px;border-radius:14px;background:var(--brand-tint);border:1px solid var(--stroke-brand-subtle);color:var(--brand-default);display:grid;place-items:center;flex:none}
+.sdk-tile .icon{font-size:20px}
+.sdk-otp-cell{width:44px;height:52px;border:1px solid var(--stroke-strong);border-radius:8px;display:grid;place-items:center;font:600 20px var(--font-family-default);background:var(--bg-default);color:var(--text-primary)}
+.sdk-otp-cell.is-focus{border-color:var(--stroke-primary);box-shadow:0 0 0 3px var(--accent-4)}
+.sdk-footer{background:var(--bg-surface);border-top:1px solid var(--stroke-default);display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 24px;font-size:10px;letter-spacing:.06em;color:var(--text-secondary)}
+.sdk-footer svg{height:14px;width:auto}
+.badge-error{display:inline-flex;align-items:center;gap:6px;border-radius:16px;padding:2px 12px;font-size:13px;font-weight:600;color:var(--feedback-error-text);background:var(--feedback-error-bg);border:1px solid var(--feedback-error-border)}
+.sdk-screen{padding:24px 16px 16px;display:grid;gap:16px}
+.sdk-screen h5{margin:0;font:700 20px/28px var(--font-family-default);color:var(--text-primary)}
+.sdk-screen p{margin:0 auto;font-size:14px;line-height:20px;color:var(--text-secondary)}
+.sdk-list{display:grid;gap:14px;text-align:left;margin:0;padding:0;list-style:none}
+.sdk-list li{display:flex;gap:12px;align-items:center;font-size:14px;line-height:20px;color:var(--text-secondary)}
+.sdk-terms{display:flex;gap:12px;text-align:left;font-size:14px;line-height:20px;color:var(--text-secondary);align-items:flex-start}
+.sdk-terms u{font-weight:700;color:var(--text-primary)}
+.sdk-text{font-size:14px;line-height:20px;max-width:260px;text-align:left}
+
+/* Pie */
+footer{border-top:1px solid var(--stroke-subtle);padding:var(--sp-6) var(--sp-8);font-size:var(--font-size-14);color:var(--text-tertiary);display:flex;flex-wrap:wrap;gap:var(--sp-4);justify-content:space-between;max-width:1200px;margin:0 auto}
+
+/* Responsive */
+@media (max-width:1080px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  .otp{display:none}
+  .brands{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .top{padding:0 var(--sp-4)}
+  .top .crumbs{display:none}
+  .pagehead,.layout{padding-left:var(--sp-4);padding-right:var(--sp-4)}
+  .tabsbar nav{padding:0 var(--sp-4)}
+  .anat,.dodont,.states{grid-template-columns:minmax(0,1fr)}
+  .prow{grid-template-columns:1fr;gap:var(--sp-2)}
+  .pcells{grid-template-columns:repeat(6,minmax(0,1fr));row-gap:var(--sp-3)}
+  .tablewrap table{min-width:600px}
+  footer{padding:var(--sp-6) var(--sp-4)}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <svg width="46" height="32" viewBox="0 0 46 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_logo)">
+<path d="M0 0.412805C0 0.183469 0.183469 0 0.412805 0H14.4176C14.6469 0 14.8304 0.183469 14.8304 0.412805V4.54085C14.8304 4.77019 14.6469 4.95366 14.4176 4.95366H5.77926C5.64166 4.95366 5.51935 5.07597 5.51935 5.21357V8.59245C5.51935 8.73005 5.64166 8.85237 5.77926 8.85237H12.1242C12.3536 8.85237 12.537 9.03583 12.537 9.26517V13.3932C12.537 13.6226 12.3536 13.806 12.1242 13.806H5.77926C5.64166 13.806 5.51935 13.9283 5.51935 14.0659V20.1816C5.51935 20.4109 5.33588 20.5944 5.10655 20.5944H0.412805C0.183469 20.5944 0 20.4109 0 20.1816V0.412805Z" fill="#2A3AD0"/>
+<path d="M17.5213 0.412805C17.5213 0.183469 17.7047 0 17.9341 0H22.6278C22.8572 0 23.0406 0.183469 23.0406 0.412805V20.1663C23.0406 20.3956 22.8572 20.5791 22.6278 20.5791H17.9341C17.7047 20.5791 17.5213 20.3956 17.5213 20.1663V0.412805Z" fill="#2A3AD0"/>
+<path d="M37.1677 0H27.4897C27.2604 0 27.0769 0.183469 27.0769 0.412805V20.1663C27.0769 20.3956 27.2604 20.5791 27.4897 20.5791H35.7764C50.5609 20.5791 47.4114 0 37.1677 0ZM36.7396 15.6254H33.0091C32.7798 15.6254 32.5963 15.4419 32.5963 15.2126V5.36646C32.5963 5.13712 32.7798 4.95365 33.0091 4.95365H34.9661C43.268 4.95365 41.7391 15.6254 36.7549 15.6254H36.7396Z" fill="#2A3AD0"/>
+<path d="M2.82848 27.2925C2.55327 27.1396 2.24749 27.0632 1.89584 27.0632C1.54419 27.0632 1.33015 27.1243 1.08552 27.2619C0.917344 27.3537 0.779742 27.4913 0.65743 27.6595V25.6719H0V30.6561H0.626851V30.0751C0.749164 30.2433 0.902054 30.3962 1.07023 30.5032C1.31486 30.6408 1.59006 30.702 1.89584 30.702C2.20162 30.702 2.55327 30.6255 2.82848 30.4726C3.10368 30.3198 3.31773 30.1057 3.47062 29.8305C3.62351 29.5553 3.69995 29.2342 3.69995 28.8826C3.69995 28.5309 3.62351 28.2099 3.47062 27.9347C3.31773 27.6595 3.10368 27.4454 2.82848 27.2925ZM2.88963 29.54C2.78261 29.7235 2.64501 29.8764 2.46154 29.9834C2.27807 30.0904 2.07931 30.1363 1.84998 30.1363C1.62064 30.1363 1.42188 30.0904 1.23841 29.9834C1.05495 29.8764 0.917344 29.7388 0.81032 29.54C0.703297 29.3565 0.65743 29.1272 0.65743 28.8826C0.65743 28.638 0.703297 28.4086 0.81032 28.2251C0.917344 28.0417 1.05495 27.8888 1.23841 27.7971C1.42188 27.69 1.62064 27.6442 1.84998 27.6442C2.07931 27.6442 2.27807 27.69 2.46154 27.7971C2.64501 27.9041 2.78261 28.0417 2.88963 28.2251C2.99666 28.4086 3.04252 28.638 3.04252 28.8826C3.04252 29.1272 2.99666 29.3565 2.88963 29.54Z" fill="#565E84"/>
+<path d="M7.03297 27.0938L5.79455 29.9375L4.54085 27.0938H3.86813L5.4429 30.6408L5.33588 30.8854C5.24415 31.0842 5.15241 31.2371 5.04539 31.3135C4.93837 31.39 4.81605 31.4358 4.64787 31.4358C4.47969 31.4358 4.41854 31.4206 4.29623 31.3747C4.1892 31.3288 4.08218 31.2677 4.00573 31.1759L3.73053 31.6652C3.85284 31.7722 3.99044 31.8486 4.14333 31.9098C4.31151 31.971 4.4644 32.0015 4.64787 32.0015C4.83134 32.0015 4.99952 31.971 5.15241 31.9098C5.3053 31.8486 5.4429 31.7416 5.58051 31.604C5.70282 31.4664 5.82513 31.2677 5.93215 31.0078L7.65982 27.0938H7.03297Z" fill="#565E84"/>
+<path d="M11.6807 22.2422H10.106V30.7123H14.2799V29.1834H11.6807V22.2422Z" fill="#565E84"/>
+<path d="M19.8911 25.2727C19.6311 24.921 19.3254 24.6458 18.9584 24.4471C18.5915 24.2636 18.194 24.1719 17.7506 24.1719C17.3072 24.1719 16.8485 24.2636 16.451 24.4471C16.0535 24.6305 15.7019 24.9057 15.3808 25.2727C15.0903 25.5938 14.8762 25.9454 14.7539 26.3276C14.6316 26.7099 14.5705 27.1074 14.5705 27.5508C14.5705 27.9941 14.6316 28.4222 14.7692 28.8045C14.9068 29.202 15.1056 29.5536 15.3655 29.8594C15.6407 30.1958 15.9771 30.4404 16.3746 30.6391C16.7721 30.8226 17.2155 30.9143 17.7047 30.9143C18.194 30.9143 17.8423 30.9143 17.9188 30.9143C17.9952 30.9143 18.0564 30.9144 18.1328 30.8991C18.4692 30.8379 18.7902 30.7156 19.1113 30.5474C19.4324 30.3639 19.677 30.1499 19.8758 29.8747H19.8911V30.7309H21.2977V24.3859H19.8911V25.288V25.2727ZM19.8452 27.5508C19.8452 28.1012 19.677 28.5445 19.3254 28.9115C18.9737 29.2784 18.5303 29.4619 17.9799 29.4466C17.4601 29.4466 17.032 29.2784 16.6498 28.9268C16.2828 28.5751 16.0994 28.1317 16.0994 27.6119C16.0994 27.0921 16.2828 26.5875 16.6345 26.2206C16.9861 25.8537 17.4448 25.6702 18.0105 25.6702C18.5609 25.6702 19.0043 25.8384 19.3407 26.2053C19.677 26.5723 19.8605 27.0156 19.8605 27.5355L19.8452 27.5508Z" fill="#565E84"/>
+<path d="M27.8261 24.3674H26.022L23.9732 27.364V22.2422H22.4443V30.7123H23.9732V27.7462L26.1596 30.7123H28.2083L25.5174 27.471L27.8261 24.3674Z" fill="#565E84"/>
+<path d="M32.9326 24.3706V25.2727C32.688 24.921 32.3669 24.6458 32 24.4471C31.6331 24.2636 31.2355 24.1719 30.7922 24.1719C30.3488 24.1719 29.8901 24.2636 29.4926 24.4471C29.0951 24.6305 28.7434 24.9057 28.4223 25.2727C28.1319 25.5938 27.9178 25.9454 27.7955 26.3276C27.6732 26.7099 27.612 27.1074 27.612 27.5508C27.612 27.9941 27.6885 28.4222 27.8261 28.8045C27.9637 29.202 28.1624 29.5536 28.4071 29.8594C28.6823 30.1958 29.0186 30.4404 29.4161 30.6391C29.8137 30.8226 30.257 30.9143 30.7463 30.9143C31.2355 30.9143 30.8839 30.9143 30.9603 30.9143C31.0368 30.9143 31.0979 30.9144 31.1744 30.8991C31.5107 30.8379 31.8318 30.7156 32.1529 30.5474C32.4739 30.3639 32.7186 30.1499 32.9173 29.8747H32.9326V30.7309H34.3392V24.3859H32.9326V24.3706ZM32.8868 27.5508C32.8868 28.1012 32.7186 28.5445 32.3669 28.9115C32.0153 29.2784 31.5719 29.4619 31.0215 29.4466C30.5017 29.4466 30.0583 29.2784 29.6913 28.9268C29.3244 28.5751 29.1256 28.1317 29.1256 27.6119C29.1256 27.0921 29.3091 26.5875 29.6608 26.2206C30.0124 25.8537 30.4711 25.6702 31.0368 25.6702C31.5872 25.6702 32.0153 25.8384 32.3669 26.2053C32.7033 26.5723 32.8868 27.0156 32.8868 27.5355V27.5508Z" fill="#565E84"/>
+<path d="M39.5681 27.6543C39.5681 27.7002 39.5681 27.7614 39.5681 27.8225C39.5528 28.2353 39.4458 28.6023 39.2776 28.9386C39.1094 29.275 38.773 29.4432 38.2532 29.4432C37.7334 29.4432 37.7945 29.382 37.6111 29.275C37.4276 29.168 37.2747 28.9998 37.1677 28.801C37.1218 28.694 37.076 28.587 37.0607 28.4799C37.0301 28.3576 37.0148 28.2353 36.9995 28.113C36.9995 28.006 36.9995 27.899 36.9842 27.7919C36.9842 27.6849 36.9842 27.5932 36.9842 27.4862V24.3672H35.4553V27.9601C35.4553 28.3576 35.4859 28.7399 35.5471 29.0762C35.6082 29.4126 35.7764 29.7336 36.0669 30.0394C36.3421 30.3452 36.6479 30.5593 36.9842 30.6969C37.3359 30.8345 37.7028 30.9109 38.0698 30.9109C38.4367 30.9109 38.7425 30.8497 39.0177 30.7121C39.3082 30.5745 39.5222 30.3452 39.6904 30.0394H39.7057V30.7121H41.1123V24.3672H39.5834V27.6543H39.5681Z" fill="#565E84"/>
+<path d="M44.3689 24.3674V22.2422H42.84V24.3674H42.0908V25.7281H42.84V30.7123H44.3689V25.7281H45.2862V24.3674H44.3689Z" fill="#565E84"/>
+</g>
+<defs>
+<clipPath id="clip0_logo">
+<rect width="45.8672" height="32" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+  <span class="crumbs">SDK / Fundamentos / <b>Color</b></span>
+  <a class="out" href="https://ricardofalcondev.github.io/fid-sdk-documentacion/" target="_blank" rel="noopener">Documentación completa</a>
+</header>
+
+<div class="pagehead">
+  <h1>Color</h1>
+  <p>Cómo se organiza, se nombra y se aplica el color en el SDK de FID.</p>
+</div>
+<div class="tabsbar">
+  <nav aria-label="Secciones de la guía">
+    <a href="#resumen" data-tab="resumen">Resumen</a>
+    <a href="#guias" data-tab="guias">Guías</a>
+    <a href="#tokens" data-tab="tokens">Tokens</a>
+    <a href="#codigo" data-tab="codigo">Código</a>
+  </nav>
+</div>
+
+<div class="layout">
+<main>
+
+<!-- ═════ RESUMEN ═════ -->
+<div class="panel" id="p-resumen" data-tab="resumen">
+  <h2 id="introduccion">Introducción</h2>
+  <p>El color del SDK tiene dos partes. Una es la identidad de FID, que es igual en todas las integraciones: los grises, los estados y la estructura de cada pantalla. La otra es un único color de marca que define cada cliente y que el SDK aplica en las acciones y en los acentos. Con esas dos partes, el mismo SDK se ve como propio en cada integración sin perder consistencia.</p>
+  <div class="brands" id="brandsIntro"></div>
+
+  <h2 id="anatomia">Anatomía del color</h2>
+  <p>Los neutros llevan la mayor parte de la pantalla: texto, fondos y bordes. El color de marca aparece solo donde hay acción o un acento: el botón principal, la casilla, los íconos de los pasos y la ilustración. Los colores de estado (error, éxito, advertencia e información) son fijos y nunca toman la marca.</p>
+  <p class="small muted">Pasá el mouse por cada punto de la lista para ver dónde está en la pantalla.</p>
+  <div class="anat">
+    <div class="stage"><div class="phone" id="anatPhone"></div></div>
+    <ol class="legend" id="anatLegend"></ol>
+  </div>
+
+  <h3 id="capas">Capas</h3>
+  <p>La pantalla se arma con capas que se separan por el fondo y por un borde de 1 px, sin sombras. Cada capa tiene su token.</p>
+  <div class="layers">
+    <div class="tag"><b>Fondo de la app</b> · <code>--bg-surface</code></div>
+    <div class="l2">
+      <div class="tag"><b>Tarjeta</b> · <code>--bg-default</code> con borde <code>--stroke-default</code></div>
+      <div class="l3">
+        <span style="background:var(--bg-subtle)">Fondo suave · <code>--bg-subtle</code></span>
+        <span style="background:var(--brand-tint);border:1px solid var(--stroke-brand-subtle)">Tile de marca · <code>--brand-tint</code></span>
+      </div>
+    </div>
+  </div>
+
+  <h2 id="implementar">Cómo se implementa</h2>
+  <p>El código nunca usa un color directo: usa un token semántico, que apunta a un color crudo de una escala. Así, cuando cambia la marca, cambia todo lo que dependía de ella.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Término</th><th>Qué es</th><th>Ejemplo</th></tr></thead>
+    <tbody>
+      <tr><td><b>Primitivo</b></td><td>Un color crudo de una escala de 12 pasos. Es materia prima: no se usa en componentes.</td><td><code>--indigo-9</code> = <button type="button" class="copyhex mono" data-copy="#2A39D0">#2A39D0</button></td></tr>
+      <tr><td><b>Token semántico</b></td><td>Un nombre que dice para qué sirve el color. Es lo único que usa el código.</td><td><code>--button-primary-bg</code></td></tr>
+      <tr><td><b>Rol</b></td><td>El grupo y la parte que describe el nombre del token.</td><td>Botón primario, fondo</td></tr>
+      <tr><td><b>Valor</b></td><td>El color que resuelve el token. Cambia con la marca; el rol no.</td><td><button type="button" class="copyhex mono" data-copy="#2A39D0">#2A39D0</button> por defecto</td></tr>
+      <tr><td><b>Marca</b></td><td>El color que define el cliente con <code>primary</code>. Ocupa el paso 9 de la escala de marca y de ahí salen los demás pasos.</td><td><code>--accent-9</code></td></tr>
+    </tbody></table></div>
+  <div class="flow" aria-label="Del primitivo al componente">
+    <div class="step"><small>Primitivo</small><code>--indigo-9</code></div><div class="arr"><span class="icon" aria-hidden="true">arrow_forward</span></div>
+    <div class="step"><small>Escala de marca</small><code>--accent-9</code></div><div class="arr"><span class="icon" aria-hidden="true">arrow_forward</span></div>
+    <div class="step"><small>Token semántico</small><code>--button-primary-bg</code></div><div class="arr"><span class="icon" aria-hidden="true">arrow_forward</span></div>
+    <div class="step"><small>Componente</small><code>background: var(--button-primary-bg)</code></div>
+  </div>
+
+  <h2 id="marca">Marca del cliente</h2>
+  <p>El SDK tiene un solo tema, claro. Lo que cambia entre integraciones es la marca: el cliente define el color principal (<code>primary</code>) y el color del texto de los botones (<code>primaryText</code>). Del color principal sale toda la escala de marca; el resto de los colores queda igual.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Marca</th><th>primary</th><th>primaryText</th><th>Escala de marca (pasos 1 a 12)</th><th>Texto sobre el botón</th></tr></thead>
+    <tbody id="brandTable"></tbody></table></div>
+  <p class="small muted">El contraste se calcula entre <code>primaryText</code> y <code>primary</code>, igual que el aviso del panel. Es una recomendación: no impide guardar.</p>
+
+  <h2 id="tokens-resumen">Tokens</h2>
+  <p>Cada token se nombra por su rol, nunca por cómo se ve: no existe un <code>--azul</code>. El nombre se arma con el grupo, el rol y, si hace falta, la parte y el estado.</p>
+  <div class="tname" aria-label="Partes del nombre --button-primary-bg-hover">
+    <span><b>--button</b><small>grupo</small></span><span><b>-primary</b><small>rol</small></span><span><b>-bg</b><small>parte</small></span><span><b>-hover</b><small>estado</small></span>
+  </div>
+  <h3 id="grupos">Grupos</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Grupo</th><th>Para qué</th><th>Tokens</th><th>Ejemplo</th></tr></thead>
+    <tbody id="groupTable"></tbody></table></div>
+  <h3 id="componente">Tokens de componente</h3>
+  <p>Los botones tienen tokens propios para el fondo, el borde, el texto y el hover de cada variante: primario, secundario, terciario, de peligro y deshabilitado. Están en la <a href="#tokens" data-go="tokens">referencia de tokens</a>.</p>
+
+  <h2 id="estados">Estados de interacción</h2>
+  <p>Cada estado tiene su propio token. Ningún estado se resuelve con opacidad ni con un color suelto.</p>
+  <h3 id="hover">Hover</h3>
+  <p>El fondo pasa al paso siguiente de su escala. En el botón primario, de <code>--accent-9</code> a <code>--accent-10</code>, que es un poco más oscuro.</p>
+  <div class="states sdk-frame" data-brand>
+    <figure><div class="stage"><span class="sdk-btn">Continuar</span></div><figcaption><i>1</i><span>Normal: <code>--button-primary-bg</code></span></figcaption></figure>
+    <figure><div class="stage"><span class="sdk-btn force-hover">Continuar</span></div><figcaption><i>2</i><span>Hover: <code>--button-primary-bg-hover</code></span></figcaption></figure>
+    <figure><div class="stage"><span class="sdk-btn sdk-btn--secondary">Cancelar</span></div><figcaption><i>1</i><span>Normal: <code>--button-secondary-bg</code></span></figcaption></figure>
+    <figure><div class="stage"><span class="sdk-btn sdk-btn--secondary force-hover">Cancelar</span></div><figcaption><i>2</i><span>Hover: <code>--button-secondary-bg-hover</code></span></figcaption></figure>
+  </div>
+  <h3 id="foco">Foco</h3>
+  <p>El borde pasa al color de marca y suma un aro de 3 px con un paso claro de la misma escala.</p>
+  <div class="states sdk-frame" data-brand>
+    <figure><div class="stage"><span class="sdk-otp-cell">4</span><span class="sdk-otp-cell">2</span></div><figcaption><i>1</i><span>Normal: <code>--stroke-strong</code></span></figcaption></figure>
+    <figure><div class="stage"><span class="sdk-otp-cell">4</span><span class="sdk-otp-cell is-focus">2</span></div><figcaption><i>2</i><span>Foco: <code>--stroke-primary</code> y aro <code>--accent-4</code></span></figcaption></figure>
+  </div>
+  <h3 id="deshabilitado">Deshabilitado</h3>
+  <p>Usa grises fijos y no toma la marca. Como no se puede usar, queda fuera de los requisitos de contraste.</p>
+  <div class="states sdk-frame" data-brand>
+    <figure><div class="stage"><span class="sdk-btn">Continuar</span></div><figcaption><i>1</i><span>Habilitado: <code>--button-primary-bg</code></span></figcaption></figure>
+    <figure><div class="stage"><button class="sdk-btn" disabled>Continuar</button></div><figcaption><i>2</i><span>Deshabilitado: <code>--button-disabled-bg</code>, <code>-border</code> y <code>-text</code></span></figcaption></figure>
+  </div>
+
+  <h2 id="accesibilidad">Accesibilidad</h2>
+  <p>El color pasa el control de contraste de WCAG 2.1. El texto normal necesita 4.5:1 (nivel AA) y llega a AAA desde 7:1. El texto grande, los íconos y los bordes de los componentes necesitan 3:1. El color nunca es la única forma de transmitir información: los errores también llevan texto y un ícono.</p>
+  <h3 id="contraste">Contraste de los tokens</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Texto</th><th>Fondo</th><th>Contraste</th><th>Nivel</th></tr></thead>
+    <tbody id="a11yTable"></tbody></table></div>
+  <p class="small muted">Calculado con los valores por defecto y redondeado a un decimal. <code>--text-placeholder</code> y <code>--accent-8</code> no llegan a AA: se usan solo en campos vacíos y en partes decorativas.</p>
+
+  <h2 id="recursos">Recursos</h2>
+  <ul class="plain">
+    <li><a href="https://drive.google.com/drive/folders/1ErW-_ImyoMbPjmgqAmvuWtwEqSEJ39Cj" target="_blank" rel="noopener">Paquete de assets en Drive</a>: <code>tokens.css</code>, <code>tokens.json</code>, <code>accent-from-primary.css</code> y <code>DESIGN.md</code>.</li>
+    <li><a href="https://www.figma.com/design/o5RhfPgp35VOEXuybrIL9W/FID-SDK-%E2%80%94-Variables--dev---refactor-?node-id=51-2936" target="_blank" rel="noopener">Variables en Figma</a>: la fuente de verdad de los tokens. Si algo contradice a Figma, gana Figma.</li>
+    <li><a href="https://ricardofalcondev.github.io/fid-sdk-documentacion/" target="_blank" rel="noopener">Documentación completa de personalización</a>: contrato, recetas de componentes, ilustraciones, íconos y la lista de verificación.</li>
+  </ul>
+</div>
+
+<!-- ═════ GUÍAS ═════ -->
+<div class="panel" id="p-guias" data-tab="guias" hidden>
+  <h2 id="superficies">Superficies</h2>
+  <p>Cada fondo tiene un uso. Elegí el token por lo que significa, aunque otro gris se vea parecido.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Token</th><th>Valor</th><th>Dónde se usa</th></tr></thead>
+    <tbody id="surfTable"></tbody></table></div>
+
+  <h2 id="donde-marca">Dónde va la marca</h2>
+  <p>El color de marca señala la acción y los acentos. Si todo tiene el color de marca, nada se destaca.</p>
+  <ul class="plain">
+    <li>Botón primario, con su hover.</li>
+    <li>Casilla marcada; el tilde usa el color del texto de los botones.</li>
+    <li>Tiles de íconos: fondo suave, borde y el ícono.</li>
+    <li>Borde y aro de foco de los campos.</li>
+    <li>Spinner e ilustraciones.</li>
+  </ul>
+  <div class="dodont sdk-frame" data-brand>
+    <div class="dd do"><div class="stage"><div class="sdk-text"><b class="sdk-title" style="color:var(--text-primary)">Verificá tu correo</b><br><span style="color:var(--text-secondary)">Te enviamos un código de 6 dígitos.</span></div><span class="sdk-btn" style="width:200px">Continuar</span></div>
+      <div class="lbl"><span class="icon icon--filled" aria-hidden="true">check_circle</span>Hacer</div><p>Usá la marca en la acción principal. El texto queda en <code>--text-primary</code> y <code>--text-secondary</code>.</p></div>
+    <div class="dd dont"><div class="stage"><div class="sdk-text"><b style="color:var(--brand-default)">Verificá tu correo</b><br><span style="color:var(--brand-default)">Te enviamos un código de 6 dígitos.</span></div><span class="sdk-btn" style="width:200px">Continuar</span></div>
+      <div class="lbl"><span class="icon icon--filled" aria-hidden="true">cancel</span>No hacer</div><p>No pintes títulos ni texto de cuerpo con la marca: compite con la acción y baja el contraste.</p></div>
+  </div>
+
+  <h2 id="estados-fijos">Los estados no cambian con la marca</h2>
+  <p>Error, éxito, advertencia e información usan <code>--feedback-*</code> en todas las integraciones, aunque la marca del cliente sea roja o verde.</p>
+  <div class="dodont sdk-frame" data-brand>
+    <div class="dd do"><div class="stage"><span class="badge-error"><span class="icon icon--filled" aria-hidden="true" style="font-size:16px">error</span> Código incorrecto</span></div>
+      <div class="lbl"><span class="icon icon--filled" aria-hidden="true">check_circle</span>Hacer</div><p>El error usa <code>--feedback-error-text</code>, <code>-bg</code> y <code>-border</code>, con texto y un ícono.</p></div>
+    <div class="dd dont"><div class="stage"><span class="badge-error" style="color:var(--brand-default);background:var(--brand-tint);border-color:var(--stroke-brand-subtle)"><span class="icon icon--filled" aria-hidden="true" style="font-size:16px">error</span> Código incorrecto</span></div>
+      <div class="lbl"><span class="icon icon--filled" aria-hidden="true">cancel</span>No hacer</div><p>No resuelvas un error con el color de marca: se confunde con una acción y no se reconoce como error.</p></div>
+  </div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Estado</th><th>Fondo</th><th>Borde</th><th>Texto</th><th>Ícono</th></tr></thead>
+    <tbody id="fbTable"></tbody></table></div>
+
+  <h2 id="texto-color">Texto sobre color</h2>
+  <p>El texto del botón primario usa <code>--button-primary-text</code>, que define el cliente con <code>primaryText</code>. Con una marca clara, el texto tiene que ser oscuro para llegar a 4.5:1.</p>
+  <div class="dodont sdk-frame" data-fixed id="txtDemo">
+    <div class="dd do"><div class="stage"><span class="sdk-btn" style="width:200px" data-pt="#1A1A1A">Continuar</span></div>
+      <div class="lbl"><span class="icon icon--filled" aria-hidden="true">check_circle</span>Hacer</div><p id="txtOk"></p></div>
+    <div class="dd dont"><div class="stage"><span class="sdk-btn" style="width:200px" data-pt="#FFFFFF">Continuar</span></div>
+      <div class="lbl"><span class="icon icon--filled" aria-hidden="true">cancel</span>No hacer</div><p id="txtNo"></p></div>
+  </div>
+
+  <h2 id="valores">Siempre con tokens</h2>
+  <div class="dodont">
+    <div class="dd do"><div class="code" style="margin:0"><pre>.boton {
+  background: var(--button-primary-bg);
+  color: var(--button-primary-text);
+}</pre></div>
+      <div class="lbl"><span class="icon icon--filled" aria-hidden="true">check_circle</span>Hacer</div><p>Usá el token semántico. Si cambia la marca, el botón cambia solo.</p></div>
+    <div class="dd dont"><div class="code" style="margin:0"><pre>.boton {
+  background: #2A39D0;
+  color: var(--indigo-1);
+}</pre></div>
+      <div class="lbl"><span class="icon icon--filled" aria-hidden="true">cancel</span>No hacer</div><p>Sin colores literales ni primitivos en componentes. Si falta un token, dejá un <code>/* TODO */</code> y avisá.</p></div>
+  </div>
+</div>
+
+<!-- ═════ TOKENS ═════ -->
+<div class="panel" id="p-tokens" data-tab="tokens" hidden>
+  <h2 id="ref-intro">Referencia de tokens</h2>
+  <p>Todos los tokens semánticos, por grupo. Elegí una marca para ver cómo cambian los valores: los marcados como <span class="badge">Marca</span> se recalculan; los demás quedan fijos. Pasá el mouse por un valor para copiarlo.</p>
+  <div class="brandpick" id="brandPick" role="group" aria-label="Marca de ejemplo"></div>
+  <div id="tokGroups"></div>
+  <h2 id="primitivos">Primitivos</h2>
+  <p>Los colores crudos de los que salen los tokens: seis escalas de 12 pasos, el blanco y el negro puros y dos escalas con transparencia. No se usan directo en componentes. Tocá un color para copiar su valor.</p>
+  <div class="prim" id="prim"></div>
+</div>
+
+<!-- ═════ CÓDIGO ═════ -->
+<div class="panel" id="p-codigo" data-tab="codigo" hidden>
+  <h2 id="uso">Uso en CSS</h2>
+  <p>Cargá los estilos del paquete en este orden y usá los tokens con <code>var()</code>. El contenedor del SDK lleva la clase <code>sdk-frame</code>.</p>
+  <div class="code"><div class="bar"><span>html</span><button type="button" data-copy-pre>Copiar</button></div><pre>&lt;link rel="stylesheet" href="css/tokens.css"&gt;
+&lt;link rel="stylesheet" href="css/accent-from-primary.css"&gt;
+&lt;link rel="stylesheet" href="css/illustrations.css"&gt;
+&lt;link rel="stylesheet" href="css/icons.css"&gt;
+
+&lt;div class="sdk-frame"&gt; … &lt;/div&gt;</pre></div>
+  <div class="code"><div class="bar"><span>css</span><button type="button" data-copy-pre>Copiar</button></div><pre>.sdk-btn {
+  background: var(--button-primary-bg);
+  border-radius: var(--radius-button);
+  color: var(--button-primary-text);
+}
+.sdk-btn:hover { background: var(--button-primary-bg-hover); }</pre></div>
+
+  <h2 id="aplicar">Aplicar la marca</h2>
+  <p>Las cuatro propiedades se escriben en el contenedor, no en el <code>:root</code> de la página del cliente. Si un HEX no es válido, se usa el valor por defecto.</p>
+  <div class="code"><div class="bar"><span>javascript</span><button type="button" data-copy-pre>Copiar</button></div><pre>var RADII = { xs: 4, s: 8, m: 16, full: 999 };
+var HEX = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
+
+function applyBranding(frame, cfg) {
+  var primary = HEX.test(cfg.primary) ? cfg.primary.toUpperCase() : '#2A39D0';
+  var text = HEX.test(cfg.primaryText) ? cfg.primaryText.toUpperCase() : '#FFFFFF';
+  var radius = cfg.radius === 'custom' ? cfg.radiusCustom : RADII[cfg.radius];
+  frame.style.setProperty('--accent-9', primary);
+  frame.style.setProperty('--button-primary-text', text);
+  frame.style.setProperty('--radius-button', radius + 'px');
+  frame.style.setProperty('--font-family-default',
+    cfg.font === 'system' ? 'system-ui' : "'" + cfg.font + "'");
+}</pre></div>
+
+  <h2 id="escala">La escala de marca</h2>
+  <p>El cliente solo define el paso 9. <code>accent-from-primary.css</code> calcula los demás: los pasos 1 a 8 mezclan el color con blanco y los pasos 10 a 12, con negro.</p>
+  <div class="code"><div class="bar"><span>css/accent-from-primary.css</span><button type="button" data-copy-pre>Copiar</button></div><pre>.sdk-frame {
+  <span class="tk-c">/* --accent-9: lo inyecta el cliente (por defecto #2A39D0 desde tokens.css) */</span>
+  --accent-1:  color-mix(in srgb, var(--accent-9)  3%, white);
+  --accent-2:  color-mix(in srgb, var(--accent-9)  5%, white);   <span class="tk-c">/* brand/surface */</span>
+  --accent-3:  color-mix(in srgb, var(--accent-9) 10%, white);   <span class="tk-c">/* brand/tint, button/tertiary-bg-hover */</span>
+  --accent-4:  color-mix(in srgb, var(--accent-9) 15%, white);   <span class="tk-c">/* aro de foco de la celda de código */</span>
+  --accent-5:  color-mix(in srgb, var(--accent-9) 22%, white);
+  --accent-6:  color-mix(in srgb, var(--accent-9) 29%, white);   <span class="tk-c">/* stroke/brand-subtle */</span>
+  --accent-7:  color-mix(in srgb, var(--accent-9) 39%, white);
+  --accent-8:  color-mix(in srgb, var(--accent-9) 54%, white);   <span class="tk-c">/* variante suave de las ilustraciones */</span>
+  --accent-10: color-mix(in srgb, var(--accent-9) 97%, black);   <span class="tk-c">/* button/primary-bg-hover */</span>
+  --accent-11: color-mix(in srgb, var(--accent-9) 87%, black);
+  --accent-12: color-mix(in srgb, var(--accent-9) 46%, black);
+}</pre></div>
+
+  <h2 id="json">tokens.json</h2>
+  <p>Los mismos tokens en JSON, para herramientas y validaciones. Cada token trae su <code>var()</code>, el valor resuelto y el primitivo al que apunta.</p>
+  <div class="code"><div class="bar"><span>tokens.json · semantic</span><button type="button" data-copy-pre>Copiar</button></div><pre>{
+  "--button-primary-bg": {
+    "css": "var(--button-primary-bg)",
+    "value": "#2A39D0",
+    "ref": "--accent-9"
+  }
+}</pre></div>
+
+  <h2 id="recursos-codigo">Recursos</h2>
+  <ul class="plain">
+    <li><a href="https://drive.google.com/drive/folders/1ErW-_ImyoMbPjmgqAmvuWtwEqSEJ39Cj" target="_blank" rel="noopener">Paquete de assets en Drive</a></li>
+    <li><a href="https://ricardofalcondev.github.io/fid-sdk-documentacion/" target="_blank" rel="noopener">Documentación completa de personalización</a></li>
+  </ul>
+</div>
+
+</main>
+<aside class="otp" aria-label="En esta página"><b>En esta página</b><nav id="otp"></nav></aside>
+</div>
+
+<footer><span>FID SDK · Color</span><span>Si algo contradice a Figma, gana Figma.</span></footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+var DATA = {"semantic":[{"name":"--text-primary","value":"#212529","ref":"--gray-12","uso":"Títulos y contenido principal","brand":false},{"name":"--text-secondary","value":"#495057","ref":"--gray-11","uso":"Cuerpo y descripciones, datos de contacto","brand":false},{"name":"--text-tertiary","value":"#6D757D","ref":"--gray-10","uso":"Apoyo, metadatos, ayudas","brand":false},{"name":"--text-brand","value":"#2A39D0","ref":"--accent-9","uso":"Texto de color de marca","brand":true},{"name":"--text-link","value":"#0000EE","ref":"--blue-11","uso":"Links (con subrayado)","brand":false},{"name":"--text-placeholder","value":"#868E96","ref":"--gray-9","uso":"Placeholder de campos (no llega a AA: solo campos vacíos)","brand":false},{"name":"--text-disabled","value":"#B7BFC6","ref":"--gray-8","uso":"Texto deshabilitado","brand":false},{"name":"--text-inverse","value":"#FFFFFF","ref":"--base-white","uso":"Texto sobre fondos oscuros (sobre el botón primario: --button-primary-text)","brand":false},{"name":"--text-inverse-subtle","value":"#CED4DA","ref":"--gray-7","uso":"Texto suave sobre fondo oscuro","brand":false},{"name":"--bg-default","value":"#FFFFFF","ref":"--base-white","uso":"Tarjeta y header","brand":false},{"name":"--bg-surface","value":"#F8F9FA","ref":"--gray-2","uso":"Fondo de la app y pie \"Powered by FID\"","brand":false},{"name":"--bg-subtle","value":"#E9ECEF","ref":"--gray-4","uso":"Fondo suave","brand":false},{"name":"--bg-muted","value":"#DEE2E6","ref":"--gray-6","uso":"Fondo apagado","brand":false},{"name":"--bg-strong","value":"#CED4DA","ref":"--gray-7","uso":"Fondo marcado","brand":false},{"name":"--bg-inverse","value":"#212529","ref":"--gray-12","uso":"Fondo oscuro (tooltip)","brand":false},{"name":"--stroke-default","value":"#DEE2E6","ref":"--gray-6","uso":"Borde de tarjeta, pista del spinner","brand":false},{"name":"--stroke-subtle","value":"#E9ECEF","ref":"--gray-4","uso":"Líneas finas, línea del header","brand":false},{"name":"--stroke-strong","value":"#CED4DA","ref":"--gray-7","uso":"Campos de entrada, celda de código","brand":false},{"name":"--stroke-primary","value":"#2A39D0","ref":"--accent-9","uso":"Borde de marca y foco","brand":true},{"name":"--stroke-brand-subtle","value":"#BDCEFE","ref":"--accent-6","uso":"Borde de tiles y del círculo de ícono","brand":true},{"name":"--button-primary-bg","value":"#2A39D0","ref":"--accent-9","uso":"Botón primario: fondo","brand":true},{"name":"--button-primary-bg-hover","value":"#252FC3","ref":"--accent-10","uso":"Botón primario: fondo en hover","brand":true},{"name":"--button-primary-text","value":"#FFFFFF","ref":"--base-white","uso":"Botón primario: texto","brand":true},{"name":"--button-secondary-bg","value":"#FFFFFF","ref":"--base-white","uso":"Botón secundario: fondo","brand":false},{"name":"--button-secondary-bg-hover","value":"#F1F3F5","ref":"--gray-3","uso":"Botón secundario: fondo en hover","brand":false},{"name":"--button-secondary-border","value":"#DEE2E6","ref":"--gray-6","uso":"Botón secundario: borde","brand":false},{"name":"--button-secondary-text","value":"#212529","ref":"--gray-12","uso":"Botón secundario: texto","brand":false},{"name":"--button-tertiary-text","value":"#2A39D0","ref":"--accent-9","uso":"Botón terciario: texto","brand":true},{"name":"--button-tertiary-bg-hover","value":"#E8EEFE","ref":"--accent-3","uso":"Botón terciario: fondo en hover","brand":true},{"name":"--button-danger-bg","value":"#B62424","ref":"--red-9","uso":"Botón de peligro: fondo","brand":false},{"name":"--button-danger-bg-hover","value":"#AA1A1C","ref":"--red-10","uso":"Botón de peligro: fondo en hover","brand":false},{"name":"--button-danger-text","value":"#FFFFFF","ref":"--base-white","uso":"Botón de peligro: texto","brand":false},{"name":"--button-disabled-bg","value":"#DEE2E6","ref":"--gray-6","uso":"Botón deshabilitado: fondo","brand":false},{"name":"--button-disabled-border","value":"#CED4DA","ref":"--gray-7","uso":"Botón deshabilitado: borde","brand":false},{"name":"--button-disabled-text","value":"#868E96","ref":"--gray-9","uso":"Botón deshabilitado: texto","brand":false},{"name":"--feedback-error-bg","value":"#FEE9E7","ref":"--red-3","uso":"Estado de error: fondo","brand":false},{"name":"--feedback-error-surface","value":"#FEF3F2","ref":"--red-2","uso":"Estado de error: superficie","brand":false},{"name":"--feedback-error-border","value":"#FFBCB7","ref":"--red-6","uso":"Estado de error: borde","brand":false},{"name":"--feedback-error-text","value":"#B62424","ref":"--red-9","uso":"Estado de error: texto","brand":false},{"name":"--feedback-error-icon","value":"#B62424","ref":"--red-9","uso":"Estado de error: ícono","brand":false},{"name":"--feedback-success-bg","value":"#E5F3E9","ref":"--green-3","uso":"Estado de éxito: fondo","brand":false},{"name":"--feedback-success-border","value":"#AFDCBD","ref":"--green-6","uso":"Estado de éxito: borde","brand":false},{"name":"--feedback-success-text","value":"#046637","ref":"--green-11","uso":"Estado de éxito: texto","brand":false},{"name":"--feedback-success-icon","value":"#1E824C","ref":"--green-9","uso":"Estado de éxito: ícono","brand":false},{"name":"--feedback-warning-bg","value":"#FFF5DF","ref":"--amber-2","uso":"Estado de advertencia: fondo","brand":false},{"name":"--feedback-warning-border","value":"#FBAE1F","ref":"--amber-7","uso":"Estado de advertencia: borde","brand":false},{"name":"--feedback-warning-text","value":"#B45309","ref":"--amber-9","uso":"Estado de advertencia: texto","brand":false},{"name":"--feedback-warning-icon","value":"#B45309","ref":"--amber-9","uso":"Estado de advertencia: ícono","brand":false},{"name":"--feedback-info-bg","value":"#E7EFFF","ref":"--blue-3","uso":"Estado de información: fondo","brand":false},{"name":"--feedback-info-border","value":"#B8D0FF","ref":"--blue-6","uso":"Estado de información: borde","brand":false},{"name":"--feedback-info-text","value":"#0000EE","ref":"--blue-11","uso":"Estado de información: texto","brand":false},{"name":"--feedback-info-icon","value":"#0F4CFF","ref":"--blue-9","uso":"Estado de información: ícono","brand":false},{"name":"--brand-default","value":"#2A39D0","ref":"--accent-9","uso":"Color de marca: casilla (el tilde usa --button-primary-text), ilustraciones, acentos","brand":true},{"name":"--brand-surface","value":"#F2F6FE","ref":"--accent-2","uso":"Tarjetas de marca","brand":true},{"name":"--brand-tint","value":"#E8EEFE","ref":"--accent-3","uso":"Fondo de tiles y de íconos","brand":true},{"name":"--accent-1","value":"#F9FAFE","ref":"--indigo-1","uso":"Escala de marca, paso 1","brand":true},{"name":"--accent-2","value":"#F2F6FE","ref":"--indigo-2","uso":"Escala de marca, paso 2","brand":true},{"name":"--accent-3","value":"#E8EEFE","ref":"--indigo-3","uso":"Escala de marca, paso 3","brand":true},{"name":"--accent-4","value":"#DDE6FF","ref":"--indigo-4","uso":"Aro de foco (3 px) de la celda de código","brand":true},{"name":"--accent-5","value":"#CEDBFE","ref":"--indigo-5","uso":"Escala de marca, paso 5","brand":true},{"name":"--accent-6","value":"#BDCEFE","ref":"--indigo-6","uso":"Escala de marca, paso 6","brand":true},{"name":"--accent-7","value":"#A6BDFE","ref":"--indigo-7","uso":"Escala de marca, paso 7","brand":true},{"name":"--accent-8","value":"#87A4FE","ref":"--indigo-8","uso":"Variante suave de ilustraciones y escáner","brand":true},{"name":"--accent-9","value":"#2A39D0","ref":"--indigo-9","uso":"Escala de marca, paso 9","brand":true},{"name":"--accent-10","value":"#252FC3","ref":"--indigo-10","uso":"Escala de marca, paso 10","brand":true},{"name":"--accent-11","value":"#1B1EA5","ref":"--indigo-11","uso":"Escala de marca, paso 11","brand":true},{"name":"--accent-12","value":"#0A0E56","ref":"--indigo-12","uso":"Escala de marca, paso 12","brand":true},{"name":"--decor-subtle","value":"#E7EFFF","ref":"--blue-3","uso":"","brand":false},{"name":"--decor-soft","value":"#CBDCFF","ref":"--blue-5","uso":"","brand":false},{"name":"--decor-default","value":"#7EA7FE","ref":"--blue-8","uso":"","brand":false},{"name":"--overlay-default","value":"#000000","ref":"--base-black","uso":"","brand":false}],"primitive":{"--gray-1":"#FCFCFD","--gray-2":"#F8F9FA","--gray-3":"#F1F3F5","--gray-4":"#E9ECEF","--gray-5":"#E3E7EA","--gray-6":"#DEE2E6","--gray-7":"#CED4DA","--gray-8":"#B7BFC6","--gray-9":"#868E96","--gray-10":"#6D757D","--gray-11":"#495057","--gray-12":"#212529","--indigo-1":"#F9FAFE","--indigo-2":"#F2F6FE","--indigo-3":"#E8EEFE","--indigo-4":"#DDE6FF","--indigo-5":"#CEDBFE","--indigo-6":"#BDCEFE","--indigo-7":"#A6BDFE","--indigo-8":"#87A4FE","--indigo-9":"#2A39D0","--indigo-10":"#252FC3","--indigo-11":"#1B1EA5","--indigo-12":"#0A0E56","--blue-1":"#F8FAFE","--blue-2":"#F2F6FE","--blue-3":"#E7EFFF","--blue-4":"#DAE7FF","--blue-5":"#CBDCFF","--blue-6":"#B8D0FF","--blue-7":"#A0BFFE","--blue-8":"#7EA7FE","--blue-9":"#0F4CFF","--blue-10":"#0030F9","--blue-11":"#0000EE","--blue-12":"#000094","--red-1":"#FFF8F8","--red-2":"#FEF3F2","--red-3":"#FEE9E7","--red-4":"#FFDDDB","--red-5":"#FFCECB","--red-6":"#FFBCB7","--red-7":"#FEA39E","--red-8":"#FC7E79","--red-9":"#B62424","--red-10":"#AA1A1C","--red-11":"#900911","--red-12":"#510C0C","--green-1":"#F8FBF9","--green-2":"#F1F8F3","--green-3":"#E5F3E9","--green-4":"#D7EDDD","--green-5":"#C5E5CE","--green-6":"#AFDCBD","--green-7":"#95D0A7","--green-8":"#71BD8B","--green-9":"#1E824C","--green-10":"#137944","--green-11":"#046637","--green-12":"#0F3C22","--amber-1":"#FFFAEE","--amber-2":"#FFF5DF","--amber-3":"#FFEDC6","--amber-4":"#FEE3AC","--amber-5":"#FFD588","--amber-6":"#FFC45D","--amber-7":"#FBAE1F","--amber-8":"#E7950A","--amber-9":"#B45309","--amber-10":"#A84C01","--amber-11":"#8F3F00","--amber-12":"#57280A","--base-white":"#FFFFFF","--base-black":"#000000","--black-a-1":"rgba(0, 0, 0, 0.02)","--black-a-2":"rgba(0, 0, 0, 0.04)","--black-a-3":"rgba(0, 0, 0, 0.06)","--black-a-4":"rgba(0, 0, 0, 0.08)","--black-a-5":"rgba(0, 0, 0, 0.1)","--black-a-6":"rgba(0, 0, 0, 0.12)","--black-a-7":"rgba(0, 0, 0, 0.16)","--black-a-8":"rgba(0, 0, 0, 0.24)","--black-a-9":"rgba(0, 0, 0, 0.44)","--black-a-10":"rgba(0, 0, 0, 0.5)","--black-a-11":"rgba(0, 0, 0, 0.6)","--black-a-12":"rgba(0, 0, 0, 0.9)","--white-a-1":"rgba(255, 255, 255, 0.02)","--white-a-2":"rgba(255, 255, 255, 0.04)","--white-a-3":"rgba(255, 255, 255, 0.06)","--white-a-4":"rgba(255, 255, 255, 0.08)","--white-a-5":"rgba(255, 255, 255, 0.1)","--white-a-6":"rgba(255, 255, 255, 0.14)","--white-a-7":"rgba(255, 255, 255, 0.18)","--white-a-8":"rgba(255, 255, 255, 0.26)","--white-a-9":"rgba(255, 255, 255, 0.5)","--white-a-10":"rgba(255, 255, 255, 0.56)","--white-a-11":"rgba(255, 255, 255, 0.7)","--white-a-12":"rgba(255, 255, 255, 0.94)"},"ill":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 80\" width=\"80\" height=\"80\" fill=\"none\" role=\"img\" aria-hidden=\"true\">\n  <title>ill-onboarding<\/title>\n  <style>\n    /* Tokens de color: el valor entre paréntesis es el de reserva si el archivo se abre solo */\n    .ill-primary    { fill: var(--accent-9, #2A39D0); }\n    .ill-primary-50 { fill: var(--accent-8, #8C94E6); }\n  <\/style>\n  <defs>\n<clipPath id=\"ill-onboarding-blur-0_0_4\" transform=\"translate(16.4 40)\"><path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M77.116 15.8436C80.6947 12.2649 80.6947 6.4627 77.116 2.88401C73.5373 -0.694671 67.7351 -0.694671 64.1564 2.88401L29.5738 37.4667C28.0993 38.9411 27.0533 40.7885 26.5476 42.8114L23.8661 53.5377C23.4741 55.1057 24.8943 56.5259 26.4623 56.1339L37.1886 53.4524C39.2115 52.9467 41.0589 51.9007 42.5333 50.4262L77.116 15.8436ZM77.2574 15.985C80.9142 12.3282 80.9142 6.39938 77.2574 2.74259C73.6006 -0.914197 67.6718 -0.914197 64.015 2.74259L29.4323 37.3252C27.9323 38.8253 26.8681 40.7049 26.3536 42.7629L23.672 53.4892C23.2434 55.2036 24.7964 56.7566 26.5108 56.328L37.2371 53.6464C39.2951 53.1319 41.1747 52.0677 42.6748 50.5677L77.2574 15.985Z\"/>\n    <\/clipPath>\n  <\/defs>\n<g id=\"ill-onboarding\">\n      <g id=\"Icons\">\n      <path id=\"Rectangle 32\" d=\"M0 20C0 16.6863 2.68629 14 6 14H45.6C48.9137 14 51.6 16.6863 51.6 20V74C51.6 77.3137 48.9137 80 45.6 80H6C2.68629 80 0 77.3137 0 74V20Z\" class=\"ill-primary\"/>\n      <path id=\"Shape\" opacity=\"0.2\" d=\"M77.2574 2.74259C80.9142 6.39938 80.9142 12.3282 77.2574 15.985L70.6617 22.5807L42.6748 50.5677C41.1747 52.0677 39.2951 53.1319 37.2371 53.6464L26.5108 56.328C24.7964 56.7566 23.2434 55.2036 23.672 53.4892L26.3536 42.7629C26.8681 40.7049 27.9323 38.8253 29.4323 37.3252L57.4193 9.33825L64.015 2.74259C67.6718 -0.914197 73.6006 -0.914197 77.2574 2.74259Z\" class=\"ill-primary-50\"/>\n      <foreignObject x=\"-16.4\" y=\"-40\" width=\"136.4\" height=\"136.4\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"backdrop-filter:blur(20px);clip-path:url(#ill-onboarding-blur-0_0_4);height:100%;width:100%\"><\/div><\/foreignObject><path id=\"Shape (Stroke)\" data-figma-bg-blur-radius=\"40\" d=\"M77.116 15.8436C80.6947 12.2649 80.6947 6.4627 77.116 2.88401C73.5373 -0.694671 67.7351 -0.694671 64.1564 2.88401L29.5738 37.4667C28.0993 38.9411 27.0533 40.7885 26.5476 42.8114L23.8661 53.5377C23.4741 55.1057 24.8943 56.5259 26.4623 56.1339L37.1886 53.4524C39.2115 52.9467 41.0589 51.9007 42.5333 50.4262L77.116 15.8436ZM77.2574 15.985C80.9142 12.3282 80.9142 6.39938 77.2574 2.74259C73.6006 -0.914197 67.6718 -0.914197 64.015 2.74259L29.4323 37.3252C27.9323 38.8253 26.8681 40.7049 26.3536 42.7629L23.672 53.4892C23.2434 55.2036 24.7964 56.7566 26.5108 56.328L37.2371 53.6464C39.2951 53.1319 41.1747 52.0677 42.6748 50.5677L77.2574 15.985Z\" fill-rule=\"evenodd\" clip-rule=\"evenodd\" fill=\"white\"/>\n      <path id=\"Polygon 2\" d=\"M27.4133 54.0244C26.5277 54.2538 25.7213 53.4475 25.9507 52.5618L26.9798 48.5896C27.2126 47.6911 28.3337 47.3857 28.99 48.042L31.9331 50.9851C32.5894 51.6415 32.2841 52.7625 31.3855 52.9953L27.4133 54.0244Z\" fill=\"white\"/>\n      <\/g>\n    <\/g>\n<\/svg>\n","logo":"<svg width=\"22\" height=\"15\" viewBox=\"0 0 46 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<g clip-path=\"url(#clip0_logo)\">\n<path d=\"M0 0.412805C0 0.183469 0.183469 0 0.412805 0H14.4176C14.6469 0 14.8304 0.183469 14.8304 0.412805V4.54085C14.8304 4.77019 14.6469 4.95366 14.4176 4.95366H5.77926C5.64166 4.95366 5.51935 5.07597 5.51935 5.21357V8.59245C5.51935 8.73005 5.64166 8.85237 5.77926 8.85237H12.1242C12.3536 8.85237 12.537 9.03583 12.537 9.26517V13.3932C12.537 13.6226 12.3536 13.806 12.1242 13.806H5.77926C5.64166 13.806 5.51935 13.9283 5.51935 14.0659V20.1816C5.51935 20.4109 5.33588 20.5944 5.10655 20.5944H0.412805C0.183469 20.5944 0 20.4109 0 20.1816V0.412805Z\" fill=\"#2A3AD0\"/>\n<path d=\"M17.5213 0.412805C17.5213 0.183469 17.7047 0 17.9341 0H22.6278C22.8572 0 23.0406 0.183469 23.0406 0.412805V20.1663C23.0406 20.3956 22.8572 20.5791 22.6278 20.5791H17.9341C17.7047 20.5791 17.5213 20.3956 17.5213 20.1663V0.412805Z\" fill=\"#2A3AD0\"/>\n<path d=\"M37.1677 0H27.4897C27.2604 0 27.0769 0.183469 27.0769 0.412805V20.1663C27.0769 20.3956 27.2604 20.5791 27.4897 20.5791H35.7764C50.5609 20.5791 47.4114 0 37.1677 0ZM36.7396 15.6254H33.0091C32.7798 15.6254 32.5963 15.4419 32.5963 15.2126V5.36646C32.5963 5.13712 32.7798 4.95365 33.0091 4.95365H34.9661C43.268 4.95365 41.7391 15.6254 36.7549 15.6254H36.7396Z\" fill=\"#2A3AD0\"/>\n<path d=\"M2.82848 27.2925C2.55327 27.1396 2.24749 27.0632 1.89584 27.0632C1.54419 27.0632 1.33015 27.1243 1.08552 27.2619C0.917344 27.3537 0.779742 27.4913 0.65743 27.6595V25.6719H0V30.6561H0.626851V30.0751C0.749164 30.2433 0.902054 30.3962 1.07023 30.5032C1.31486 30.6408 1.59006 30.702 1.89584 30.702C2.20162 30.702 2.55327 30.6255 2.82848 30.4726C3.10368 30.3198 3.31773 30.1057 3.47062 29.8305C3.62351 29.5553 3.69995 29.2342 3.69995 28.8826C3.69995 28.5309 3.62351 28.2099 3.47062 27.9347C3.31773 27.6595 3.10368 27.4454 2.82848 27.2925ZM2.88963 29.54C2.78261 29.7235 2.64501 29.8764 2.46154 29.9834C2.27807 30.0904 2.07931 30.1363 1.84998 30.1363C1.62064 30.1363 1.42188 30.0904 1.23841 29.9834C1.05495 29.8764 0.917344 29.7388 0.81032 29.54C0.703297 29.3565 0.65743 29.1272 0.65743 28.8826C0.65743 28.638 0.703297 28.4086 0.81032 28.2251C0.917344 28.0417 1.05495 27.8888 1.23841 27.7971C1.42188 27.69 1.62064 27.6442 1.84998 27.6442C2.07931 27.6442 2.27807 27.69 2.46154 27.7971C2.64501 27.9041 2.78261 28.0417 2.88963 28.2251C2.99666 28.4086 3.04252 28.638 3.04252 28.8826C3.04252 29.1272 2.99666 29.3565 2.88963 29.54Z\" fill=\"#565E84\"/>\n<path d=\"M7.03297 27.0938L5.79455 29.9375L4.54085 27.0938H3.86813L5.4429 30.6408L5.33588 30.8854C5.24415 31.0842 5.15241 31.2371 5.04539 31.3135C4.93837 31.39 4.81605 31.4358 4.64787 31.4358C4.47969 31.4358 4.41854 31.4206 4.29623 31.3747C4.1892 31.3288 4.08218 31.2677 4.00573 31.1759L3.73053 31.6652C3.85284 31.7722 3.99044 31.8486 4.14333 31.9098C4.31151 31.971 4.4644 32.0015 4.64787 32.0015C4.83134 32.0015 4.99952 31.971 5.15241 31.9098C5.3053 31.8486 5.4429 31.7416 5.58051 31.604C5.70282 31.4664 5.82513 31.2677 5.93215 31.0078L7.65982 27.0938H7.03297Z\" fill=\"#565E84\"/>\n<path d=\"M11.6807 22.2422H10.106V30.7123H14.2799V29.1834H11.6807V22.2422Z\" fill=\"#565E84\"/>\n<path d=\"M19.8911 25.2727C19.6311 24.921 19.3254 24.6458 18.9584 24.4471C18.5915 24.2636 18.194 24.1719 17.7506 24.1719C17.3072 24.1719 16.8485 24.2636 16.451 24.4471C16.0535 24.6305 15.7019 24.9057 15.3808 25.2727C15.0903 25.5938 14.8762 25.9454 14.7539 26.3276C14.6316 26.7099 14.5705 27.1074 14.5705 27.5508C14.5705 27.9941 14.6316 28.4222 14.7692 28.8045C14.9068 29.202 15.1056 29.5536 15.3655 29.8594C15.6407 30.1958 15.9771 30.4404 16.3746 30.6391C16.7721 30.8226 17.2155 30.9143 17.7047 30.9143C18.194 30.9143 17.8423 30.9143 17.9188 30.9143C17.9952 30.9143 18.0564 30.9144 18.1328 30.8991C18.4692 30.8379 18.7902 30.7156 19.1113 30.5474C19.4324 30.3639 19.677 30.1499 19.8758 29.8747H19.8911V30.7309H21.2977V24.3859H19.8911V25.288V25.2727ZM19.8452 27.5508C19.8452 28.1012 19.677 28.5445 19.3254 28.9115C18.9737 29.2784 18.5303 29.4619 17.9799 29.4466C17.4601 29.4466 17.032 29.2784 16.6498 28.9268C16.2828 28.5751 16.0994 28.1317 16.0994 27.6119C16.0994 27.0921 16.2828 26.5875 16.6345 26.2206C16.9861 25.8537 17.4448 25.6702 18.0105 25.6702C18.5609 25.6702 19.0043 25.8384 19.3407 26.2053C19.677 26.5723 19.8605 27.0156 19.8605 27.5355L19.8452 27.5508Z\" fill=\"#565E84\"/>\n<path d=\"M27.8261 24.3674H26.022L23.9732 27.364V22.2422H22.4443V30.7123H23.9732V27.7462L26.1596 30.7123H28.2083L25.5174 27.471L27.8261 24.3674Z\" fill=\"#565E84\"/>\n<path d=\"M32.9326 24.3706V25.2727C32.688 24.921 32.3669 24.6458 32 24.4471C31.6331 24.2636 31.2355 24.1719 30.7922 24.1719C30.3488 24.1719 29.8901 24.2636 29.4926 24.4471C29.0951 24.6305 28.7434 24.9057 28.4223 25.2727C28.1319 25.5938 27.9178 25.9454 27.7955 26.3276C27.6732 26.7099 27.612 27.1074 27.612 27.5508C27.612 27.9941 27.6885 28.4222 27.8261 28.8045C27.9637 29.202 28.1624 29.5536 28.4071 29.8594C28.6823 30.1958 29.0186 30.4404 29.4161 30.6391C29.8137 30.8226 30.257 30.9143 30.7463 30.9143C31.2355 30.9143 30.8839 30.9143 30.9603 30.9143C31.0368 30.9143 31.0979 30.9144 31.1744 30.8991C31.5107 30.8379 31.8318 30.7156 32.1529 30.5474C32.4739 30.3639 32.7186 30.1499 32.9173 29.8747H32.9326V30.7309H34.3392V24.3859H32.9326V24.3706ZM32.8868 27.5508C32.8868 28.1012 32.7186 28.5445 32.3669 28.9115C32.0153 29.2784 31.5719 29.4619 31.0215 29.4466C30.5017 29.4466 30.0583 29.2784 29.6913 28.9268C29.3244 28.5751 29.1256 28.1317 29.1256 27.6119C29.1256 27.0921 29.3091 26.5875 29.6608 26.2206C30.0124 25.8537 30.4711 25.6702 31.0368 25.6702C31.5872 25.6702 32.0153 25.8384 32.3669 26.2053C32.7033 26.5723 32.8868 27.0156 32.8868 27.5355V27.5508Z\" fill=\"#565E84\"/>\n<path d=\"M39.5681 27.6543C39.5681 27.7002 39.5681 27.7614 39.5681 27.8225C39.5528 28.2353 39.4458 28.6023 39.2776 28.9386C39.1094 29.275 38.773 29.4432 38.2532 29.4432C37.7334 29.4432 37.7945 29.382 37.6111 29.275C37.4276 29.168 37.2747 28.9998 37.1677 28.801C37.1218 28.694 37.076 28.587 37.0607 28.4799C37.0301 28.3576 37.0148 28.2353 36.9995 28.113C36.9995 28.006 36.9995 27.899 36.9842 27.7919C36.9842 27.6849 36.9842 27.5932 36.9842 27.4862V24.3672H35.4553V27.9601C35.4553 28.3576 35.4859 28.7399 35.5471 29.0762C35.6082 29.4126 35.7764 29.7336 36.0669 30.0394C36.3421 30.3452 36.6479 30.5593 36.9842 30.6969C37.3359 30.8345 37.7028 30.9109 38.0698 30.9109C38.4367 30.9109 38.7425 30.8497 39.0177 30.7121C39.3082 30.5745 39.5222 30.3452 39.6904 30.0394H39.7057V30.7121H41.1123V24.3672H39.5834V27.6543H39.5681Z\" fill=\"#565E84\"/>\n<path d=\"M44.3689 24.3674V22.2422H42.84V24.3674H42.0908V25.7281H42.84V30.7123H44.3689V25.7281H45.2862V24.3674H44.3689Z\" fill=\"#565E84\"/>\n<\/g>\n<defs>\n<clipPath id=\"clip0_logo\">\n<rect width=\"45.8672\" height=\"32\" fill=\"white\"/>\n<\/clipPath>\n<\/defs>\n<\/svg>"};
+var $ = function (s, r) { return (r || document).querySelector(s); };
+var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+function el(h) { var t = document.createElement('template'); t.innerHTML = h.trim(); return t.content.firstChild; }
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function toast(m) { var t = $('#toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(function () { t.classList.remove('on'); }, 1600); }
+function copy(text) { var done = function () { toast(text.length <= 40 ? 'Copiado: ' + text : 'Copiado'); }; if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, done); else done(); }
+function copyBtn(v) { return '<button type="button" class="copyhex mono" data-copy="' + esc(v) + '" title="Copiar ' + esc(v) + '">' + esc(v) + '</button>'; }
+
+/* ═════ Color ═════ */
+function norm(h) { h = h.toUpperCase(); return h.length === 4 ? '#' + h[1] + h[1] + h[2] + h[2] + h[3] + h[3] : h; }
+function lum(hex) { var h = norm(hex); var c = [1, 3, 5].map(function (i) { var v = parseInt(h.slice(i, i + 2), 16) / 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; }
+function contrast(a, b) { var la = lum(a), lb = lum(b); return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05); }
+function level(r) { return r >= 7 ? 'AAA' : r >= 4.5 ? 'AA' : null; }
+var STEPS = { 1: [3, 'w'], 2: [5, 'w'], 3: [10, 'w'], 4: [15, 'w'], 5: [22, 'w'], 6: [29, 'w'], 7: [39, 'w'], 8: [54, 'w'], 9: [100, 'p'], 10: [97, 'b'], 11: [87, 'b'], 12: [46, 'b'] };
+function mix(hex, pct, w) { var h = norm(hex), t = pct / 100, o = w === 'w' ? 255 : 0; return '#' + [1, 3, 5].map(function (i) { var v = Math.round(parseInt(h.slice(i, i + 2), 16) * t + o * (1 - t)); return ('0' + v.toString(16)).slice(-2); }).join('').toUpperCase(); }
+function accent(primary, n) { var s = STEPS[n]; return s[1] === 'p' ? norm(primary) : mix(primary, s[0], s[1]); }
+var BRANDS = [
+  { n: 'FID', primary: '#2A39D0', text: '#FFFFFF' },
+  { n: 'Violeta', primary: '#6D28D9', text: '#FFFFFF' },
+  { n: 'Esmeralda', primary: '#0B6E4F', text: '#FFFFFF' },
+  { n: 'Amarillo', primary: '#F5C518', text: '#1A1A1A' }
+];
+function applyBrand(frame, b) { frame.style.setProperty('--accent-9', b.primary); frame.style.setProperty('--button-primary-text', b.text); }
+function tok(name) { return DATA.semantic.filter(function (t) { return t.name === name; })[0]; }
+function resolve(name, b) {
+  if (name === '--button-primary-text') return b.text;
+  var t = tok(name), m = /^--accent-(\d+)$/.exec(t.ref || '') || /^--accent-(\d+)$/.exec(name);
+  return m ? accent(b.primary, +m[1]) : t.value;
+}
+
+/* ═════ Pantalla de ejemplo ═════ */
+function suffixIds(svg, k) { return svg.replace(/id="([^"]+)"/g, 'id="$1-' + k + '"').replace(/url\(#([^)]+)\)/g, 'url(#$1-' + k + ')').replace(/href="#([^"]+)"/g, 'href="#$1-' + k + '"'); }
+function phone(k) {
+  return '<div class="sdk-frame sdk-card"><div class="sdk-screen">' +
+    '<div data-a="ill" style="display:grid;place-items:center;height:80px">' + suffixIds(DATA.ill, k).replace('width="80" height="80"', 'width="72" height="72"') + '</div>' +
+    '<h5 data-a="title">Creá tu firma digital</h5><p data-a="body">Para emitir tu certificado de firma digital y poder firmar, primero necesitamos confirmar tu identidad.</p>' +
+    '<ul class="sdk-list"><li><span class="sdk-tile" data-a="tile"><span class="icon" aria-hidden="true">pin</span></span>Te enviaremos un código para verificar tu correo y teléfono de contacto.</li><li><span class="sdk-tile"><span class="icon" aria-hidden="true">ar_on_you</span></span>Vamos a escanear tu rostro para asegurar que sos vos.</li><li><span class="sdk-tile"><span class="icon" aria-hidden="true">shield_lock</span></span>Vas a crear la clave para firmar tus documentos de forma segura.</li></ul>' +
+    '<div class="sdk-terms"><span class="sdk-checkbox" data-a="check"><span class="icon icon--filled" aria-hidden="true">check</span></span><span>Confirmo que he leído, comprendido y acepto los <u>términos y condiciones del acuerdo con suscriptores</u></span></div>' +
+    '<span class="sdk-btn" data-a="btn">Continuar</span></div>' +
+    '<div class="sdk-footer" data-a="foot">POWERED BY ' + DATA.logo + '</div></div>';
+}
+function buildIntro() {
+  $('#brandsIntro').innerHTML = BRANDS.map(function (b, i) { return '<figure><div class="mini" data-b="' + i + '">' + phone('i' + i) + '</div><figcaption>' + b.n + ' · <code>' + b.primary + '</code></figcaption></figure>'; }).join('');
+  $$('#brandsIntro [data-b]').forEach(function (w) { applyBrand($('.sdk-frame', w), BRANDS[+w.dataset.b]); });
+}
+var ANAT = [
+  ['card', 'Tarjeta', ['--bg-default', '--stroke-default']],
+  ['title', 'Título', ['--text-primary']],
+  ['body', 'Texto de cuerpo', ['--text-secondary']],
+  ['ill', 'Ilustración', ['--accent-9', '--accent-8']],
+  ['tile', 'Tile de ícono', ['--brand-tint', '--stroke-brand-subtle', '--brand-default']],
+  ['check', 'Casilla marcada', ['--brand-default', '--button-primary-text']],
+  ['btn', 'Botón primario', ['--button-primary-bg', '--button-primary-text']],
+  ['foot', 'Pie', ['--bg-surface', '--text-secondary']]
+];
+function buildAnatomy() {
+  $('#anatPhone').innerHTML = phone('a');
+  var frame = $('#anatPhone .sdk-card'); frame.setAttribute('data-a', 'card');
+  $('#anatLegend').innerHTML = ANAT.map(function (a) {
+    return '<li tabindex="0" data-k="' + a[0] + '"><div><b>' + a[1] + '</b><span>' + a[2].map(function (n) { var t = tok(n); return '<code>' + n + '</code>' + (t && t.brand ? ' <span class="badge">Marca</span>' : ''); }).join(', ') + '</span></div></li>';
+  }).join('');
+  function hot(k, on) { var t = $('#anatPhone [data-a="' + k + '"]'); if (t) t.classList.toggle('hot', on); }
+  $$('#anatLegend li').forEach(function (li) {
+    ['mouseenter', 'focus'].forEach(function (ev) { li.addEventListener(ev, function () { hot(li.dataset.k, true); }); });
+    ['mouseleave', 'blur'].forEach(function (ev) { li.addEventListener(ev, function () { hot(li.dataset.k, false); }); });
+  });
+}
+
+/* ═════ Tablas del resumen ═════ */
+function strip(primary) { var h = ''; for (var n = 1; n <= 12; n++) h += '<i style="background:' + accent(primary, n) + '" title="accent-' + n + ' ' + accent(primary, n) + '"></i>'; return '<div class="strip">' + h + '</div>'; }
+function buildBrandTable() {
+  $('#brandTable').innerHTML = BRANDS.map(function (b) {
+    var r = contrast(b.text, b.primary), l = level(r);
+    return '<tr><td><b>' + b.n + '</b></td><td><span class="sw" style="background:' + b.primary + '"></span>' + copyBtn(b.primary) + '</td><td><span class="sw" style="background:' + b.text + '"></span>' + copyBtn(b.text) + '</td><td>' + strip(b.primary) + '</td><td>' + r.toFixed(1) + ':1 ' + (l ? '<span class="badge ok">' + l + '</span>' : '<span class="badge no">No llega a AA</span>') + '</td></tr>';
+  }).join('');
+}
+var GROUPS = [
+  ['text', 'Texto', 'Jerarquía del texto, links, deshabilitado y texto sobre fondos oscuros', '--text-secondary'],
+  ['bg', 'Fondos', 'Fondo de la app, tarjetas y fondos suaves', '--bg-surface'],
+  ['stroke', 'Bordes', 'Bordes de tarjetas, campos, foco y tiles', '--stroke-default'],
+  ['button', 'Botones', 'Fondo, borde, texto y hover de cada variante', '--button-primary-bg'],
+  ['feedback', 'Estados', 'Error, éxito, advertencia e información (fijos)', '--feedback-error-text'],
+  ['brand', 'Marca y acento', 'Color de marca y la escala accent de 12 pasos', '--brand-default'],
+  ['decor', 'Decorativos', 'Fondos decorativos y la capa para sombras', '--decor-soft']
+];
+function groupOf(name) { var g = name.replace(/^--/, '').split('-')[0]; if (g === 'accent') g = 'brand'; if (g === 'overlay') g = 'decor'; return g; }
+function buildGroupTable() {
+  $('#groupTable').innerHTML = GROUPS.map(function (g) {
+    var n = DATA.semantic.filter(function (t) { return groupOf(t.name) === g[0]; }).length;
+    return '<tr><td><b>' + g[1] + '</b></td><td>' + g[2] + '</td><td>' + n + '</td><td><code>' + g[3] + '</code></td></tr>';
+  }).join('');
+}
+var A11Y = [
+  ['--button-primary-text', '--button-primary-bg'], ['--text-primary', '--bg-default'], ['--text-secondary', '--bg-default'],
+  ['--text-tertiary', '--bg-default'], ['--text-link', '--bg-default'], ['--feedback-error-text', '--feedback-error-bg'],
+  ['--text-placeholder', '--bg-default'], ['--accent-8', '--bg-default']
+];
+function buildA11y() {
+  var b = BRANDS[0];
+  $('#a11yTable').innerHTML = A11Y.map(function (p) {
+    var fg = resolve(p[0], b), bg = resolve(p[1], b), r = contrast(fg, bg), l = level(r);
+    return '<tr><td><span class="sw" style="background:' + fg + '"></span><code>' + p[0] + '</code></td><td><span class="sw" style="background:' + bg + '"></span><code>' + p[1] + '</code></td><td>' + r.toFixed(1) + ':1</td><td>' + (l ? '<span class="badge ok">' + l + '</span>' : '<span class="badge no">No llega a AA</span>') + '</td></tr>';
+  }).join('');
+}
+
+/* ═════ Guías ═════ */
+function buildGuides() {
+  $('#surfTable').innerHTML = DATA.semantic.filter(function (t) { return groupOf(t.name) === 'bg'; }).map(function (t) {
+    return '<tr><td><span class="sw" style="background:' + t.value + '"></span><code>' + t.name + '</code></td><td>' + copyBtn(t.value) + '</td><td>' + esc(t.uso) + '</td></tr>';
+  }).join('');
+  $('#fbTable').innerHTML = [['error', 'Error'], ['success', 'Éxito'], ['warning', 'Advertencia'], ['info', 'Información']].map(function (s) {
+    return '<tr><td><b>' + s[1] + '</b></td>' + ['bg', 'border', 'text', 'icon'].map(function (p) { var t = tok('--feedback-' + s[0] + '-' + p); return '<td>' + (t ? '<span class="sw" style="background:' + t.value + '"></span>' + copyBtn(t.value) : '—') + '</td>'; }).join('') + '</tr>';
+  }).join('');
+  var y = '#F5C518';
+  $$('#txtDemo [data-pt]').forEach(function (b) { b.style.setProperty('--button-primary-bg', y); b.style.setProperty('--button-primary-text', b.dataset.pt); });
+  var ok = contrast('#1A1A1A', y), no = contrast('#FFFFFF', y);
+  $('#txtOk').innerHTML = 'Texto <code>#1A1A1A</code> sobre <code>' + y + '</code>: ' + ok.toFixed(1) + ':1, nivel ' + level(ok) + '.';
+  $('#txtNo').innerHTML = 'Texto blanco sobre <code>' + y + '</code>: ' + no.toFixed(1) + ':1. No llega a AA y cuesta leerlo. El panel lo avisa, pero no lo bloquea.';
+}
+
+/* ═════ Tokens ═════ */
+var brandSel = 0;
+function buildTokens() {
+  $('#brandPick').innerHTML = BRANDS.map(function (b, i) { return '<button type="button" data-i="' + i + '" aria-pressed="' + (i === brandSel) + '"><i style="background:' + b.primary + '"></i>' + b.n + '</button>'; }).join('');
+  $('#brandPick').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; brandSel = +b.dataset.i; $$('#brandPick button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); renderTokens(); });
+  renderTokens();
+}
+function renderTokens() {
+  var b = BRANDS[brandSel];
+  $('#tokGroups').innerHTML = GROUPS.map(function (g) {
+    var rows = DATA.semantic.filter(function (t) { return groupOf(t.name) === g[0]; });
+    return '<h3 id="g-' + g[0] + '">' + g[1] + '</h3><div class="tablewrap"><table><thead><tr><th>Token</th><th>Rol</th><th>Primitivo</th><th>Valor</th><th></th></tr></thead><tbody>' + rows.map(function (t) {
+      var v = resolve(t.name, b), isColor = /^#|^rgba?\(/.test(v);
+      var refTxt = t.brand ? (t.name === '--button-primary-text' ? 'primaryText' : (/^--accent-/.test(t.ref) ? t.ref : (/^--accent-/.test(t.name) ? 'calculado de primary' : t.ref))) : (t.ref || '—');
+      return '<tr><td>' + (isColor ? '<span class="sw" style="background:' + v + '"></span>' : '') + '<code>' + t.name + '</code></td><td>' + esc(t.uso) + '</td><td><code>' + esc(refTxt) + '</code></td><td>' + copyBtn(v) + '</td><td>' + (t.brand ? '<span class="badge">Marca</span>' : '<span class="badge fix">Fijo</span>') + '</td></tr>';
+    }).join('') + '</tbody></table></div>';
+  }).join('');
+  buildOtp();
+}
+var PRIM_FAM = [['gray', 'Neutros'], ['indigo', 'Marca FID por defecto'], ['blue', 'Links e información'], ['red', 'Error'], ['green', 'Éxito'], ['amber', 'Advertencia'], ['base', 'Blanco y negro'], ['black-a', 'Negro con transparencia'], ['white-a', 'Blanco con transparencia']];
+function buildPrimitives() {
+  var names = Object.keys(DATA.primitive);
+  $('#prim').innerHTML = PRIM_FAM.map(function (f) {
+    var list = names.filter(function (n) { return f[0] === 'base' ? n.indexOf('--base-') === 0 : new RegExp('^--' + f[0] + '-\\d+$').test(n); });
+    return '<div class="prow"><div class="plab"><b>' + f[0] + '</b><span>' + f[1] + '</span></div><div class="pcells">' + list.map(function (n) {
+      var v = DATA.primitive[n], a = /rgba\([^)]*,\s*([\d.]+)\)/.exec(v), step = (/-(\d+)$/.exec(n) || [])[1] || n.replace('--base-', ''), bg, fg, label;
+      if (!a) { bg = v; fg = lum(v) > 0.4 ? 'var(--text-primary)' : 'var(--text-inverse)'; label = v; }
+      else { var al = +a[1], dark = n.indexOf('--white-a') === 0; bg = 'linear-gradient(' + v + ',' + v + '),' + (dark ? 'var(--bg-inverse)' : 'var(--bg-default)'); fg = dark ? (al >= 0.5 ? 'var(--text-primary)' : 'var(--text-inverse)') : (al >= 0.44 ? 'var(--text-inverse)' : 'var(--text-primary)'); label = Math.round(al * 100) + ' %'; }
+      return '<button type="button" class="pc" data-copy="' + v + '" title="' + n + ': ' + v + '" aria-label="Copiar ' + v + ' (' + n + ')"><i style="background:' + bg + ';color:' + fg + '">' + step + '<span class="icon ic" aria-hidden="true">content_copy</span></i><small>' + label + '</small></button>';
+    }).join('') + '</div></div>';
+  }).join('');
+  $('#prim').addEventListener('click', function (e) { var c = e.target.closest('.pc'); if (!c) return; var ic = $('.ic', c); ic.textContent = 'check'; c.classList.add('done'); clearTimeout(c.t); c.t = setTimeout(function () { ic.textContent = 'content_copy'; c.classList.remove('done'); }, 1200); });
+}
+
+/* ═════ Pestañas e índice de la página ═════ */
+var TABS = ['resumen', 'guias', 'tokens', 'codigo'];
+function currentTab() { var h = location.hash.slice(1); if (TABS.indexOf(h) > -1) return h; var t = h && document.getElementById(h); if (t) { var p = t.closest('.panel'); if (p) return p.dataset.tab; } return 'resumen'; }
+function showTab(tab, scrollTop) {
+  $$('.panel').forEach(function (p) { p.hidden = p.dataset.tab !== tab; });
+  $$('.tabsbar a').forEach(function (a) { if (a.dataset.tab === tab) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+  buildOtp();
+  if (scrollTop) window.scrollTo(0, 0);
+}
+function buildOtp() {
+  var p = $('.panel:not([hidden])'); if (!p) return;
+  var hs = $$('h2[id], h3[id]', p).filter(function (h) { return h.tagName === 'H2' || /^g-/.test(h.id); });
+  $('#otp').innerHTML = hs.map(function (h) { return '<a href="#' + h.id + '" data-id="' + h.id + '">' + h.textContent + '</a>'; }).join('');
+  spy();
+}
+function spy() { var links = $$('#otp a'); if (!links.length) return; var cur = links[0]; links.forEach(function (a) { var t = document.getElementById(a.dataset.id); if (t && t.getBoundingClientRect().top < 180) cur = a; }); links.forEach(function (a) { a.classList.toggle('on', a === cur); }); }
+addEventListener('scroll', spy, { passive: true });
+addEventListener('hashchange', function () { var h = location.hash.slice(1); showTab(currentTab(), TABS.indexOf(h) > -1); });
+
+document.addEventListener('click', function (e) {
+  var c = e.target.closest('[data-copy]'); if (c) { copy(c.getAttribute('data-copy')); return; }
+  var p = e.target.closest('[data-copy-pre]'); if (p) { copy(p.closest('.code').querySelector('pre').textContent); return; }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  buildIntro(); buildAnatomy(); buildBrandTable(); buildGroupTable(); buildA11y(); buildGuides(); buildPrimitives(); buildTokens();
+  showTab(currentTab(), false);
+  var h = location.hash.slice(1); if (h && TABS.indexOf(h) < 0 && document.getElementById(h)) document.getElementById(h).scrollIntoView();
+});
+</script>
+</body>
+</html>
